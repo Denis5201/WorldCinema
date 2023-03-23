@@ -5,36 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".presentation.login.SignUpFragment">
+    tools:context=".presentation.collections.FilmsCollectionFragment">
+
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Регистрация"
+        android:text="Фильмы коллекции"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/goToEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="toMain"
+        android:text="Редактировать"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <Button
-        android:id="@+id/toSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="toSignIn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.worldcinema.presentation.login.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:launchSingleTop="true"
+            app:popUpToSaveState="true"
+            app:restoreState="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_baseFragment"
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.worldcinema.presentation.login.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_baseFragment"
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/baseFragment"
+        android:name="com.example.worldcinema.presentation.base.BaseFragment"
+        android:label="fragment_base"
+        tools:layout="@layout/fragment_base" >
+        <action
+            android:id="@+id/action_baseFragment_to_filmsCollectionFragment"
+            app:destination="@id/filmsCollectionFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_filmFragment"
+            app:destination="@id/filmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmsCollectionFragment"
+        android:name="com.example.worldcinema.presentation.collections.FilmsCollectionFragment"
+        android:label="fragment_films_collection"
+        tools:layout="@layout/fragment_films_collection" >
+        <action
+            android:id="@+id/action_filmsCollectionFragment_to_editCollectionFragment"
+            app:destination="@id/editCollectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCollectionFragment"
+        android:name="com.example.worldcinema.presentation.collections.EditCollectionFragment"
+        android:label="fragment_edit_collection"
+        tools:layout="@layout/fragment_edit_collection" />
+    <fragment
+        android:id="@+id/filmFragment"
+        android:name="com.example.worldcinema.presentation.movie.FilmFragment"
+        android:label="fragment_film"
+        tools:layout="@layout/fragment_film" >
+        <action
+            android:id="@+id/action_filmFragment_to_episodeFragment"
+            app:destination="@id/episodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeFragment"
+        android:name="com.example.worldcinema.presentation.movie.EpisodeFragment"
+        android:label="fragment_episode"
+        tools:layout="@layout/fragment_episode" />
+</navigation>
