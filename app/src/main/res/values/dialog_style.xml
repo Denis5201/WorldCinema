@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/dialog_button</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowTitleStyle">@style/title_style</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="dialog_button" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:background">@drawable/upper_button</item>
+    </style>
+
+    <style name="title_style" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
