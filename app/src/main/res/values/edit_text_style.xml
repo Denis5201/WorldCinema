@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="editText">
+        <item name="android:background">@drawable/edit_text</item>
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+</resources>
