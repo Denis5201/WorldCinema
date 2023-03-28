@@ -20,4 +20,9 @@
     <string name="wrong_email_format">Неверный формат почты</string>
     <string name="empty_input">Заполнены не все поля</string>
     <string name="password_not_equal_with_confirm">Поля пароль и подтвердите пароль не совпадают</string>
+    <string name="exit">Выход</string>
+    <string name="change">Изменить</string>
+    <string name="discussion">Обсуждения</string>
+    <string name="history">История</string>
+    <string name="settings">Настройки</string>
 </resources>
