@@ -1,10 +1,16 @@
 package com.example.worldcinema.presentation.profile
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHost
@@ -22,6 +28,27 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels()
+
+    private var bitmap: Bitmap? = null
+
+    private val getGalleryImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        resutl ->
+        if (resutl.resultCode == RESULT_OK) {
+            val uri = resutl.data?.data ?: return@registerForActivityResult
+
+            bitmap = MediaStore.Images.Media.getBitmap(this.requireContext().contentResolver, uri)
+            viewModel.loadAvatar(bitmap!!)
+        }
+    }
+    private val getCameraImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            resutl ->
+        if (resutl.resultCode == RESULT_OK) {
+            bitmap = resutl.data?.extras?.get("data") as Bitmap
+            if (bitmap != null) {
+                viewModel.loadAvatar(bitmap!!)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +71,25 @@ class ProfileFragment : Fragment() {
             mainNavHost.navController.navigate(R.id.action_baseFragment_to_signInFragment)
         }
 
+        binding.changeAvatar.setOnClickListener {
+            val dialog = AlertDialog.Builder(this.requireContext())
+                .setTitle(R.string.load_avatar)
+                .setMessage(R.string.choosing_method_load)
+                .setPositiveButton(R.string.from_gallery) { dialog, _ ->
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "image/*"
+                    getGalleryImage.launch(intent)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.create_photo) { dialog, _ ->
+                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    getCameraImage.launch(intent)
+                    dialog.dismiss()
+                }
+                .create()
+            dialog.show()
+        }
+
         viewModel.uiState.observe(viewLifecycleOwner) {
             if (it.isLoading) {
                 binding.avatarProfile.visibility = View.INVISIBLE
@@ -54,9 +100,19 @@ class ProfileFragment : Fragment() {
                 binding.nameProfile.visibility = View.VISIBLE
                 binding.emailProfile.visibility = View.VISIBLE
             }
+            if (it.loadedAvatar) {
+                Glide.with(this.requireContext())
+                    .load(bitmap)
+                    .placeholder(R.drawable.avatar_default)
+                    .error(R.drawable.avatar_default)
+                    .fallback(R.drawable.avatar_default)
+                    .circleCrop()
+                    .into(binding.avatarProfile)
+                viewModel.setDefaultStatus()
+            }
             if (it.isShowMessage) {
                 createErrorDialog(this.requireContext(), it.message) {
-                    viewModel.closeDialog()
+                    viewModel.setDefaultStatus()
                 }.show()
             }
         }
@@ -79,4 +135,5 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

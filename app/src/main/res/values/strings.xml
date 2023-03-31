@@ -25,4 +25,8 @@
     <string name="discussion">Обсуждения</string>
     <string name="history">История</string>
     <string name="settings">Настройки</string>
+    <string name="load_avatar">Загрузка аватарки</string>
+    <string name="choosing_method_load">Выберите откуда загрузить фото</string>
+    <string name="from_gallery">С галереи</string>
+    <string name="create_photo">Сделать фотографию</string>
 </resources>

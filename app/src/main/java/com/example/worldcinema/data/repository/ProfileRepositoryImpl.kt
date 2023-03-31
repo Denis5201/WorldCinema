@@ -24,8 +24,15 @@ class ProfileRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun loadAvatar(avatar: String): Flow<Result<Unit>> {
-        TODO("Not yet implemented")
-    }
+    override fun loadAvatar(avatar: String): Flow<Result<Unit>> = flow {
+        try {
+            api.loadAvatar(avatar)
+            emit(Result.success(Unit))
+        }
+        catch (e: Exception) {
+            Log.e("OPS loadAvatar", e.message.toString())
+            emit(Result.failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
 
 }
