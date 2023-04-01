@@ -17,6 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="400dp"
             android:background="@drawable/gradient"
+            android:backgroundTint="@null"
             android:contentDescription="@string/content_description"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,11 +29,11 @@
             android:id="@+id/gradient"
             android:layout_width="0dp"
             android:layout_height="400dp"
+            android:background="@drawable/gradient"
             android:contentDescription="@string/content_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cover"
-            tools:src="@drawable/gradient" />
+            app:layout_constraintTop_toTopOf="@+id/cover" />
 
         <Button
             android:id="@+id/coverButton"
