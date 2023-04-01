@@ -1,6 +1,7 @@
 package com.example.worldcinema.di
 
 import com.example.worldcinema.data.api.AuthApi
+import com.example.worldcinema.data.api.MovieApi
 import com.example.worldcinema.data.api.ProfileApi
 import dagger.Module
 import dagger.Provides
@@ -20,4 +21,8 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideProfileApi(retrofit: Retrofit): ProfileApi = retrofit.create(ProfileApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
 }

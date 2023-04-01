@@ -29,4 +29,10 @@
     <string name="choosing_method_load">Выберите откуда загрузить фото</string>
     <string name="from_gallery">С галереи</string>
     <string name="create_photo">Сделать фотографию</string>
+    <string name="watch">Смотреть</string>
+    <string name="in_trend">В тренде</string>
+    <string name="your_watched">Вы смотрели</string>
+    <string name="new_movie">Новое</string>
+    <string name="for_your">Для вас</string>
+    <string name="specify_interests">Указать интересы</string>
 </resources>

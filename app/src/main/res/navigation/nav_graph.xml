@@ -49,6 +49,9 @@
             app:destination="@id/signInFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_baseFragment_to_episodeFragment"
+            app:destination="@id/episodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/filmsCollectionFragment"
@@ -72,10 +75,20 @@
         <action
             android:id="@+id/action_filmFragment_to_episodeFragment"
             app:destination="@id/episodeFragment" />
+        <argument
+            android:name="movie"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/episodeFragment"
         android:name="com.example.worldcinema.presentation.movie.EpisodeFragment"
         android:label="fragment_episode"
-        tools:layout="@layout/fragment_episode" />
+        tools:layout="@layout/fragment_episode" >
+        <argument
+            android:name="episodeId"
+            app:argType="string" />
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+    </fragment>
 </navigation>
