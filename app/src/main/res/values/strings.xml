@@ -35,4 +35,7 @@
     <string name="new_movie">Новое</string>
     <string name="for_your">Для вас</string>
     <string name="specify_interests">Указать интересы</string>
+    <string name="description">Описание</string>
+    <string name="frames">Кадры</string>
+    <string name="episodes">Эпизоды</string>
 </resources>

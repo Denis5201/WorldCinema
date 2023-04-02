@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/previewEpisodeItem"
+        android:layout_width="128dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/content_description"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/nameEpisodeItem"
+        style="@style/text_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/previewEpisodeItem"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Нелегальная магия" />
+
+    <TextView
+        android:id="@+id/desciptionEpisodeItem"
+        style="@style/text_body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/nameEpisodeItem"
+        app:layout_constraintTop_toBottomOf="@+id/nameEpisodeItem"
+        tools:text="@string/already_have_account" />
+
+    <TextView
+        android:id="@+id/yearEpisodeItem"
+        style="@style/text_body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="@+id/desciptionEpisodeItem"
+        app:layout_constraintTop_toBottomOf="@+id/desciptionEpisodeItem"
+        tools:text="2015" />
+</androidx.constraintlayout.widget.ConstraintLayout>

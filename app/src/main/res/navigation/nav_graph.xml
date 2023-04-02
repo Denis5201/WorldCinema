@@ -90,5 +90,12 @@
         <argument
             android:name="movieId"
             app:argType="string" />
+        <argument
+            android:name="episode"
+            app:argType="string"
+            app:nullable="true" />
+        <argument android:name="movie"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
