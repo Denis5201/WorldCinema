@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="play_exo_button">
+        <item name="android:src">@drawable/play_video</item>
+        <item name="android:contentDescription">@string/content_description</item>
+    </style>
+</resources>

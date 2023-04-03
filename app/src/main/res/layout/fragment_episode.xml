@@ -1,19 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fillViewport="true"
     tools:context=".presentation.movie.EpisodeFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/videoView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:controller_layout_id="@layout/custom_control_view"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:show_timeout="500" />
+
     <TextView
+        android:id="@+id/nameEpisode"
+        style="@style/h1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/videoView"
+        tools:text="@string/choosing_method_load" />
+
+    <ImageView
+        android:id="@+id/moviePosterEpisode"
+        android:layout_width="44dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/content_description"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEpisode"
+        tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/movieNameEpisode"
+            style="@style/text_body3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/movieChatEpisode"
+            app:layout_constraintStart_toEndOf="@+id/moviePosterEpisode"
+            app:layout_constraintTop_toTopOf="@+id/moviePosterEpisode"
+            tools:text="@string/confirm_password" />
+
+    <TextView
+        android:id="@+id/movieYearEpisode"
+        style="@style/text_body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Смотрим эпизод"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@+id/moviePosterEpisode"
+        app:layout_constraintStart_toEndOf="@+id/moviePosterEpisode"
+        tools:text="@string/content_description" />
+
+        <ImageView
+        android:id="@+id/backEpisode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/content_description"
+        android:src="@drawable/arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/heartEpisode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/content_description"
+        android:src="@drawable/heart"
+        app:layout_constraintBottom_toBottomOf="@+id/moviePosterEpisode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/moviePosterEpisode" />
+
+    <ImageView
+        android:id="@+id/plusEpisode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/content_description"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@+id/heartEpisode"
+        app:layout_constraintEnd_toStartOf="@+id/heartEpisode"
+        app:layout_constraintTop_toTopOf="@+id/heartEpisode" />
+
+    <ImageView
+        android:id="@+id/movieChatEpisode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/content_description"
+        android:src="@drawable/discussion"
+        app:layout_constraintBottom_toBottomOf="@+id/plusEpisode"
+        app:layout_constraintEnd_toStartOf="@+id/plusEpisode"
+        app:layout_constraintTop_toTopOf="@+id/plusEpisode" />
+
+    <TextView
+        android:id="@+id/descriptionEpisodeH1"
+        style="@style/h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/description"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moviePosterEpisode" />
+
+    <TextView
+        android:id="@+id/descriptionEpisode"
+        style="@style/text_body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEpisodeH1"
+        tools:text="@string/choosing_method_load" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionEpisode" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

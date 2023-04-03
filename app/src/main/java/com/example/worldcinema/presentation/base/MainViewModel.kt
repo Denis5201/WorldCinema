@@ -110,7 +110,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             getLastViewMovieUseCase().collect { result ->
                 result.onSuccess {
-                    _lastViewEpisode.value = if (it.isEmpty()) null else it.first()
+                    _lastViewEpisode.value = if (it.isEmpty()) null else it.last()
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
                         isShowMessage = true,

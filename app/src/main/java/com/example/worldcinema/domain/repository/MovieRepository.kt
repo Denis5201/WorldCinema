@@ -12,4 +12,6 @@ interface MovieRepository {
     fun getEpisodes(movieId: String): Flow<Result<List<Episode>>>
 
     fun getHistory(): Flow<Result<List<EpisodeHistory>>>
+
+    fun getMovieById(movieId: String): Flow<Result<Movie>>
 }

@@ -80,11 +80,16 @@ class MainFragment : Fragment() {
                 binding.lastViewText.visibility = View.GONE
                 binding.lastViewCover.visibility = View.GONE
                 binding.playLastEpisode.visibility = View.GONE
-            } else {
-                binding.lastViewText.visibility = View.VISIBLE
-                binding.lastViewCover.visibility = View.VISIBLE
-                binding.playLastEpisode.visibility = View.VISIBLE
+                return@observe
             }
+            binding.lastViewText.visibility = View.VISIBLE
+            binding.lastViewCover.visibility = View.VISIBLE
+            binding.playLastEpisode.visibility = View.VISIBLE
+
+            Glide.with(this.requireContext())
+                .load(it.preview)
+                .error(R.drawable.logo)
+                .into(binding.lastViewCover)
         }
         viewModel.newList.observe(viewLifecycleOwner) {
             setData(binding.newText, binding.newRV, it, true)

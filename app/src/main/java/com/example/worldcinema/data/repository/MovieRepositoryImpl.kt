@@ -53,4 +53,19 @@ class MovieRepositoryImpl @Inject constructor(
             emit(Result.failure(e))
         }
     }.flowOn(Dispatchers.IO)
+
+    override fun getMovieById(movieId: String): Flow<Result<Movie>> = flow {
+        try {
+            val movie = api.getListMovie(FilterMain.LAST_VIEW.inRequest)
+                .filter { it.movieId == movieId }
+                .map { it.toMovie() }
+            if (movie.isEmpty()) {
+                throw Exception("movie not found")
+            }
+            emit(Result.success(movie.first()))
+        } catch (e: Exception) {
+            Log.e("OPS getMovieById", e.message.toString())
+            emit(Result.failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
 }
