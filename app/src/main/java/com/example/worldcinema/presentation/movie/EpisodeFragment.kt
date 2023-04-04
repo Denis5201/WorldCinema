@@ -80,7 +80,6 @@ class EpisodeFragment : Fragment() {
             }
             binding.moviePosterEpisode.visibility = View.VISIBLE
             binding.movieNameEpisode.visibility = View.VISIBLE
-            binding.movieYearEpisode.visibility = View.VISIBLE
             if (it.chatInfo != null) {
                 binding.movieChatEpisode.visibility = View.VISIBLE
             }
@@ -96,6 +95,13 @@ class EpisodeFragment : Fragment() {
         viewModel.timePosition.observe(viewLifecycleOwner) {
             if (it + 5 < viewModel.episode.value!!.runtime) {
                 player.seekTo(it*1000)
+            }
+        }
+
+        viewModel.releaseYears.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.movieYearEpisode.text = it
+                binding.movieYearEpisode.visibility = View.VISIBLE
             }
         }
 

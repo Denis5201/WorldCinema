@@ -42,7 +42,9 @@ class MainFragment : Fragment() {
             if (it.goWatchEpisode) {
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
 
-                val directions = BaseFragmentDirections.actionBaseFragmentToEpisodeFragment(it.episodeId, it.movieId, null, null)
+                val directions = BaseFragmentDirections.actionBaseFragmentToEpisodeFragment(
+                    it.episodeId, it.movieId, null, null, null
+                )
                 mainNavHost.navController.navigate(directions)
 
                 viewModel.setDefaultStatus()

@@ -15,6 +15,7 @@ class EpisodeViewModel @Inject constructor(
     private val getLastViewMovieByIdUseCase: GetLastViewMovieByIdUseCase,
     private val getEpisodeCurrentTimeUseCase: GetEpisodeCurrentTimeUseCase,
     private val saveEpisodeCurrentTimeUseCase: SaveEpisodeCurrentTimeUseCase,
+    private val calculateReleaseYearsUseCase: CalculateReleaseYearsUseCase,
     getMovieByStringUseCase: GetMovieByStringUseCase,
     getEpisodeByStringUseCase: GetEpisodeByStringUseCase,
     savedStateHandle: SavedStateHandle
@@ -28,6 +29,9 @@ class EpisodeViewModel @Inject constructor(
 
     private val _episode = MutableLiveData<Episode>(null)
     val episode: LiveData<Episode> = _episode
+
+    private val _releaseYears = MutableLiveData<String>()
+    val releaseYears: LiveData<String> = _releaseYears
 
     private val _timePosition = MutableLiveData<Long>()
     val timePosition: LiveData<Long> = _timePosition
@@ -43,6 +47,7 @@ class EpisodeViewModel @Inject constructor(
             _movie.value = getMovieByStringUseCase(movieString)
             _episode.value = getEpisodeByStringUseCase(episodeString)
             getVideoPosition(_episode.value!!.episodeId)
+            _releaseYears.value = args.releaseYear!!
         }
     }
 
@@ -50,10 +55,11 @@ class EpisodeViewModel @Inject constructor(
         if (_episode.value == null) {
             return
         }
-        if (time <= 0 || time / 1000 == _timePosition.value) {
-            setNavigation(reason)
-        }
         val timeInSeconds = time / 1000
+        if (timeInSeconds <= 0 || timeInSeconds == _timePosition.value) {
+            setNavigation(reason)
+            return
+        }
         viewModelScope.launch {
             saveEpisodeCurrentTimeUseCase(
                 _episode.value!!.episodeId, timeInSeconds
@@ -100,6 +106,7 @@ class EpisodeViewModel @Inject constructor(
             getEpisodesUseCase(movieId).collect { result ->
                 result.onSuccess { episodeList ->
                     _episode.value = episodeList.find { it.episodeId == episodeId }
+                    _releaseYears.value = calculateReleaseYearsUseCase(episodeList)
                     getVideoPosition(episodeId)
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(

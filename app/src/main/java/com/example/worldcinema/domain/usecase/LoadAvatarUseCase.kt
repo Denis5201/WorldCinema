@@ -8,5 +8,5 @@ class LoadAvatarUseCase @Inject constructor(
     private val repository: ProfileRepository
 ) {
 
-    operator fun invoke(image: String): Flow<Result<Unit>> = repository.loadAvatar(image)
+    operator fun invoke(imageArray: ByteArray): Flow<Result<Unit>> = repository.loadAvatar(imageArray)
 }

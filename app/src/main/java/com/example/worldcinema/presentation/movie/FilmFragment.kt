@@ -43,6 +43,12 @@ class FilmFragment : Fragment() {
             .error(R.drawable.logo)
             .into(binding.posterFilm)
 
+        binding.watchEpisode.setOnClickListener {
+            if (viewModel.episodes.value != null) {
+                viewModel.toEpisodeScreen(viewModel.episodes.value!!.first().episodeId)
+            }
+        }
+
         binding.age.text = viewModel.movie.age
         binding.age.setTextColor(Color.parseColor(viewModel.ageColor))
 
@@ -86,7 +92,7 @@ class FilmFragment : Fragment() {
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
 
                 val directions = FilmFragmentDirections.actionFilmFragmentToEpisodeFragment(
-                    it.episodeId, viewModel.movie.movieId, it.episodeString, viewModel.movieString
+                    it.episodeId, viewModel.movie.movieId, it.episodeString, viewModel.movieString, it.releaseYear
                 )
                 mainNavHost.navController.navigate(directions)
 

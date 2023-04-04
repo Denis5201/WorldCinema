@@ -5,6 +5,7 @@ data class FilmUiState(
     val movieString: String = "",
     val episodeId: String = "",
     val episodeString: String = "",
+    val releaseYear: String = "",
     val isShowMessage: Boolean = false,
     val message: String = ""
 )

@@ -1,7 +1,6 @@
 package com.example.worldcinema.presentation.profile
 
 import android.graphics.Bitmap
-import android.util.Base64
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -68,9 +67,8 @@ class ProfileViewModel @Inject constructor(
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, baos)
 
-        val imageString = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
         viewModelScope.launch {
-            loadAvatarUseCase(imageString).collect { result ->
+            loadAvatarUseCase(baos.toByteArray()).collect { result ->
                 result.onSuccess {
                     _uiState.value = _uiState.value!!.copy(
                         loadedAvatar = true

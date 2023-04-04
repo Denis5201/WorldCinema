@@ -8,6 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -24,9 +27,12 @@ class ProfileRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun loadAvatar(avatar: String): Flow<Result<Unit>> = flow {
+    override fun loadAvatar(avatarArray: ByteArray): Flow<Result<Unit>> = flow {
         try {
-            api.loadAvatar(avatar)
+            val body = avatarArray.toRequestBody(MEDIA_PNG.toMediaType(), 0, avatarArray.size)
+            val part = MultipartBody.Part.createFormData(FILE, FILENAME, body)
+
+            api.loadAvatar(part)
             emit(Result.success(Unit))
         }
         catch (e: Exception) {
@@ -35,4 +41,9 @@ class ProfileRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    private companion object {
+        const val MEDIA_PNG = "image/png"
+        const val FILE = "file"
+        const val FILENAME = "avatar.png"
+    }
 }

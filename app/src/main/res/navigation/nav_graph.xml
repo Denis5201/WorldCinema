@@ -97,5 +97,9 @@
         <argument android:name="movie"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="releaseYear"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

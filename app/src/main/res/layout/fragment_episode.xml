@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:show_timeout="500" />
+            app:show_timeout="1000" />
 
     <TextView
         android:id="@+id/nameEpisode"

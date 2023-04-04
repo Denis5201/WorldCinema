@@ -4,10 +4,7 @@ import androidx.lifecycle.*
 import com.example.worldcinema.MessageSource
 import com.example.worldcinema.domain.model.Episode
 import com.example.worldcinema.domain.model.Movie
-import com.example.worldcinema.domain.usecase.GetAgeColorStringUseCase
-import com.example.worldcinema.domain.usecase.GetEpisodesUseCase
-import com.example.worldcinema.domain.usecase.GetMovieByStringUseCase
-import com.example.worldcinema.domain.usecase.GetStringEpisodeUseCase
+import com.example.worldcinema.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +13,7 @@ import javax.inject.Inject
 class FilmViewModel @Inject constructor(
     private val getEpisodesUseCase: GetEpisodesUseCase,
     private val getStringEpisodeUseCase: GetStringEpisodeUseCase,
+    private val calculateReleaseYearsUseCase: CalculateReleaseYearsUseCase,
     getMovieByStringUseCase: GetMovieByStringUseCase,
     getAgeColorStringUseCase: GetAgeColorStringUseCase,
     savedStateHandle: SavedStateHandle
@@ -58,6 +56,9 @@ class FilmViewModel @Inject constructor(
             getEpisodesUseCase(movie.movieId).collect { result ->
                 result.onSuccess {
                     _episodes.value = it
+                    _uiState.value = _uiState.value!!.copy(
+                        releaseYear = calculateReleaseYearsUseCase(it)
+                    )
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
                         isShowMessage = true,

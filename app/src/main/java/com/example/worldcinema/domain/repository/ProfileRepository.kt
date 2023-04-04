@@ -7,5 +7,5 @@ interface ProfileRepository {
 
     fun getUserAccount(): Flow<Result<UserAccount>>
 
-    fun loadAvatar(avatar: String): Flow<Result<Unit>>
+    fun loadAvatar(avatarArray: ByteArray): Flow<Result<Unit>>
 }
