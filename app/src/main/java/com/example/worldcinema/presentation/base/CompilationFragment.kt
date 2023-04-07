@@ -4,15 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavHost
 import androidx.navigation.fragment.findNavController
+import com.example.worldcinema.R
 import com.example.worldcinema.databinding.FragmentCompilationBinding
+import com.example.worldcinema.presentation.createErrorDialog
+import com.yuyakaido.android.cardstackview.*
+import dagger.hilt.android.AndroidEntryPoint
 
-class CompilationFragment : Fragment() {
+@AndroidEntryPoint
+class CompilationFragment : Fragment(), CardStackListener {
 
     private var _binding: FragmentCompilationBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: CompilationViewModel by viewModels()
+    private val adapter by lazy { CompilationAdapter() }
+    private lateinit var manager: CardStackLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +40,97 @@ class CompilationFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().popBackStack()
         }
+
+        binding.currentMovieName.isSelected = true
+
+        manager = CardStackLayoutManager(requireContext(), this)
+        binding.cardStack.layoutManager = manager
+
+
+        binding.crossButton.setOnClickListener {
+            val setting = SwipeAnimationSetting.Builder()
+                .setDirection(Direction.Left)
+                .setDuration(Duration.Normal.duration)
+                .setInterpolator(AccelerateInterpolator())
+                .build()
+            manager.setSwipeAnimationSetting(setting)
+            binding.cardStack.swipe()
+        }
+        binding.movieButton.setOnClickListener {
+            viewModel.toFilmScreen(adapter.movieList[manager.topPosition])
+        }
+        binding.heartButton.setOnClickListener {
+            val setting = SwipeAnimationSetting.Builder()
+                .setDirection(Direction.Right)
+                .setDuration(Duration.Slow.duration)
+                .setInterpolator(AccelerateInterpolator())
+                .build()
+            manager.setSwipeAnimationSetting(setting)
+            binding.cardStack.swipe()
+        }
+
+        viewModel.compilation.observe(viewLifecycleOwner) {
+            adapter.movieList = it
+                .filterIndexed { index, _ -> index >= viewModel.swipedCounter }
+                .toMutableList()
+            if (adapter.movieList.isEmpty()) {
+                binding.buttonsAndText.visibility = View.INVISIBLE
+            } else {
+                binding.buttonsAndText.visibility = View.VISIBLE
+            }
+            binding.cardStack.adapter = adapter
+        }
+
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            if (!it.isLoading) {
+                binding.progressBarCompilation.visibility = View.GONE
+                binding.compilationEmptyImage.visibility = View.VISIBLE
+                binding.compilationEmptyText.visibility = View.VISIBLE
+            }
+            if (it.goToFilmScreen) {
+                val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+
+                val directions = BaseFragmentDirections.actionBaseFragmentToFilmFragment(it.movieString)
+                mainNavHost.navController.navigate(directions)
+
+                viewModel.setDefaultStatus()
+            } else if (it.isShowMessage) {
+                createErrorDialog(this.requireContext(), it.message) {
+                    viewModel.setDefaultStatus()
+                }.show()
+            }
+        }
+    }
+
+    override fun onCardDragging(direction: Direction?, ratio: Float) {}
+
+    override fun onCardSwiped(direction: Direction?) {
+        when (direction) {
+            Direction.Left -> {
+                viewModel.dislike(adapter.movieList[manager.topPosition - 1].movieId)
+                viewModel.itemSwiped()
+            }
+            Direction.Right -> {
+                //Add to Favourites Collection
+                viewModel.itemSwiped()
+            }
+            else -> {}
+        }
+        if (manager.topPosition >= adapter.movieList.size) {
+            binding.buttonsAndText.visibility = View.INVISIBLE
+        }
+    }
+
+    override fun onCardRewound() {}
+
+    override fun onCardCanceled() {}
+
+    override fun onCardAppeared(view: View?, position: Int) {
+        binding.currentMovieName.text = adapter.movieList[position].name
+    }
+
+    override fun onCardDisappeared(view: View?, position: Int) {
+
     }
 
     override fun onDestroyView() {

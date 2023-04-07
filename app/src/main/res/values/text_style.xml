@@ -48,4 +48,11 @@
         <item name="android:fontWeight">700</item>
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
+
+    <style name="h2">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontWeight">400</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
 </resources>

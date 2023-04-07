@@ -38,4 +38,5 @@
     <string name="description">Описание</string>
     <string name="frames">Кадры</string>
     <string name="episodes">Эпизоды</string>
+    <string name="compilation_empty">Новые фильмы \nв подборке закончились</string>
 </resources>

@@ -68,4 +68,14 @@ class MovieRepositoryImpl @Inject constructor(
             emit(Result.failure(e))
         }
     }.flowOn(Dispatchers.IO)
+
+    override fun dislike(movieId: String): Flow<Result<Unit>> = flow {
+        try {
+            api.dislike(movieId)
+            emit(Result.success(Unit))
+        } catch (e: Exception) {
+            Log.e("OPS dislike", e.message.toString())
+            emit(Result.failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
 }

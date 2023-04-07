@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="progress_bar" parent="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large">
+        <item name="android:indeterminateTint">@color/orange</item>
+    </style>
+</resources>

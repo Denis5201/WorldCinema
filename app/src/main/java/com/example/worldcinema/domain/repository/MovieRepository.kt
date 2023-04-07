@@ -14,4 +14,6 @@ interface MovieRepository {
     fun getHistory(): Flow<Result<List<EpisodeHistory>>>
 
     fun getMovieById(movieId: String): Flow<Result<Movie>>
+
+    fun dislike(movieId: String): Flow<Result<Unit>>
 }
