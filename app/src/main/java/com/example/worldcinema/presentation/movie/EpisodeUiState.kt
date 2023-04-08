@@ -6,5 +6,6 @@ data class EpisodeUiState(
     val chatId: String = "",
     val makingRequest: Boolean = false,
     val isShowMessage: Boolean = false,
-    val message: String = ""
+    val message: String = "",
+    val isLoadingEpisode: Boolean = false
 )

@@ -58,8 +58,10 @@ class EpisodeFragment : Fragment() {
 
         viewModel.episode.observe(viewLifecycleOwner) {
             if (it == null) {
+                binding.descriptionEpisodeH1.visibility = View.GONE
                 return@observe
             }
+            binding.descriptionEpisodeH1.visibility = View.VISIBLE
             binding.nameEpisode.text = it.name
             binding.movieYearEpisode.text = it.year.toString()
             binding.descriptionEpisode.text = it.description
@@ -70,24 +72,18 @@ class EpisodeFragment : Fragment() {
         }
         viewModel.movie.observe(viewLifecycleOwner) {
             if (it == null) {
-                binding.moviePosterEpisode.visibility = View.GONE
-                binding.movieNameEpisode.visibility = View.GONE
                 binding.movieYearEpisode.visibility = View.GONE
-                binding.movieChatEpisode.visibility = View.GONE
-                binding.heartEpisode.visibility = View.GONE
-                binding.plusEpisode.visibility = View.GONE
+                binding.movieGroup.visibility = View.GONE
                 return@observe
             }
-            binding.moviePosterEpisode.visibility = View.VISIBLE
-            binding.movieNameEpisode.visibility = View.VISIBLE
+            binding.movieGroup.visibility = View.VISIBLE
             if (it.chatInfo != null) {
                 binding.movieChatEpisode.visibility = View.VISIBLE
             }
-            binding.heartEpisode.visibility = View.VISIBLE
-            binding.plusEpisode.visibility = View.VISIBLE
 
             Glide.with(this.requireContext())
                 .load(it.poster)
+                .error(R.drawable.logo)
                 .into(binding.moviePosterEpisode)
             binding.movieNameEpisode.text = it.name
         }
@@ -122,6 +118,9 @@ class EpisodeFragment : Fragment() {
                 createErrorDialog(this.requireContext(), it.message) {
                     viewModel.setDefaultStatus()
                 }.show()
+            }
+            if (!it.isLoadingEpisode) {
+                binding.progressBarEpisode.visibility = View.GONE
             }
         }
     }

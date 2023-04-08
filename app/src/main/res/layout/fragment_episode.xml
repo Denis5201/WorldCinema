@@ -21,6 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:show_buffering="always"
             app:show_timeout="1000" />
 
     <TextView
@@ -160,6 +161,24 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/movieGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="heartEpisode,plusEpisode,movieChatEpisode,movieNameEpisode,moviePosterEpisode"
+            tools:layout_editor_absoluteX="154dp"
+            tools:layout_editor_absoluteY="567dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBarEpisode"
+            style="@style/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moviePosterEpisode" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

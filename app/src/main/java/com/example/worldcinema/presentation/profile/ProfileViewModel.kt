@@ -22,14 +22,13 @@ class ProfileViewModel @Inject constructor(
     private val loadAvatarUseCase: LoadAvatarUseCase
 ): ViewModel() {
 
-    private val _uiState = MutableLiveData<ProfileUiState>()
+    private val _uiState = MutableLiveData(ProfileUiState())
     val uiState: LiveData<ProfileUiState> = _uiState
 
     private val _profile = MutableLiveData<UserAccount>()
     val profile: LiveData<UserAccount> = _profile
 
     init {
-        _uiState.value = ProfileUiState(isLoading = true)
         getAccount()
     }
 

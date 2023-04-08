@@ -102,16 +102,23 @@ class EpisodeViewModel @Inject constructor(
     }
 
     private fun getEpisodeById(episodeId: String, movieId: String) {
+        _uiState.value = _uiState.value!!.copy(
+            isLoadingEpisode = true
+        )
         viewModelScope.launch {
             getEpisodesUseCase(movieId).collect { result ->
                 result.onSuccess { episodeList ->
                     _episode.value = episodeList.find { it.episodeId == episodeId }
                     _releaseYears.value = calculateReleaseYearsUseCase(episodeList)
                     getVideoPosition(episodeId)
+                    _uiState.value = _uiState.value!!.copy(
+                        isLoadingEpisode = false
+                    )
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
                         isShowMessage = true,
-                        message = it.message ?: MessageSource.ERROR
+                        message = it.message ?: MessageSource.ERROR,
+                        isLoadingEpisode = false
                     )
                 }
             }

@@ -23,11 +23,10 @@ class SignInViewModel @Inject constructor(
     isFirstRunAppUseCase: IsFirstRunAppUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData<SignInUiState>()
+    private val _uiState = MutableLiveData(SignInUiState())
     val uiState: LiveData<SignInUiState> = _uiState
 
     init {
-        _uiState.value = SignInUiState(isLoading = true)
         if (isFirstRunAppUseCase()) {
             _uiState.value = _uiState.value!!.copy(mustNavigateToRegister = true)
         } else {

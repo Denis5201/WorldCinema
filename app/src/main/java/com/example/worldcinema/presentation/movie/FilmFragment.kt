@@ -98,6 +98,9 @@ class FilmFragment : Fragment() {
 
                 viewModel.setDefaultStatus()
             }
+            if (!it.isLoadingEpisodes) {
+                binding.progressBarFilm.visibility = View.GONE
+            }
         }
     }
 

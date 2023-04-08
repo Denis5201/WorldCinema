@@ -53,6 +53,10 @@ class SignInFragment : Fragment() {
                     viewModel.closeDialog()
                 }.show()
             }
+            if (!it.isLoading) {
+                binding.progressBarSignIn.visibility = View.GONE
+                binding.signInGroup.visibility = View.VISIBLE
+            }
         }
     }
 

@@ -57,10 +57,12 @@ class FilmViewModel @Inject constructor(
                 result.onSuccess {
                     _episodes.value = it
                     _uiState.value = _uiState.value!!.copy(
-                        releaseYear = calculateReleaseYearsUseCase(it)
+                        releaseYear = calculateReleaseYearsUseCase(it),
+                        isLoadingEpisodes = false
                     )
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
+                        isLoadingEpisodes = false,
                         isShowMessage = true,
                         message = it.message ?: MessageSource.ERROR
                     )

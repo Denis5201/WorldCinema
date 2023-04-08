@@ -112,7 +112,7 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/userChats"
         style="@style/text_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -146,5 +146,23 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/profileGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="exit,nameProfile,emailProfile,changeAvatar,avatarProfile,userChats,textView5,textView7,imageView7,imageView5,imageView6"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progressBarProfile"
+        style="@style/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

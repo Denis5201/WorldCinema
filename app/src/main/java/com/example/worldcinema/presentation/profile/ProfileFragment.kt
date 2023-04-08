@@ -91,14 +91,9 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.uiState.observe(viewLifecycleOwner) {
-            if (it.isLoading) {
-                binding.avatarProfile.visibility = View.INVISIBLE
-                binding.nameProfile.visibility = View.INVISIBLE
-                binding.emailProfile.visibility = View.INVISIBLE
-            } else {
-                binding.avatarProfile.visibility = View.VISIBLE
-                binding.nameProfile.visibility = View.VISIBLE
-                binding.emailProfile.visibility = View.VISIBLE
+            if (!it.isLoading) {
+                binding.progressBarProfile.visibility = View.GONE
+                binding.profileGroup.visibility = View.VISIBLE
             }
             if (it.loadedAvatar) {
                 Glide.with(this.requireContext())

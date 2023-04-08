@@ -64,34 +64,30 @@ class MainFragment : Fragment() {
 
         viewModel.coverImage.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {
-                binding.cover.visibility = View.GONE
-                binding.coverButton.visibility = View.GONE
-            } else {
-                binding.cover.visibility = View.VISIBLE
-                binding.coverButton.visibility = View.VISIBLE
-                Glide.with(this.requireContext())
-                    .load(it)
-                    .into(binding.cover)
+                return@observe
             }
+            Glide.with(this.requireContext())
+                .load(it)
+                .into(binding.cover)
+            binding.cover.visibility = View.VISIBLE
+            binding.coverButton.visibility = View.VISIBLE
         }
         viewModel.trendList.observe(viewLifecycleOwner) {
             setData(binding.inTrendText, binding.inTrendRV, it)
         }
         viewModel.lastViewEpisode.observe(viewLifecycleOwner) {
             if (it == null) {
-                binding.lastViewText.visibility = View.GONE
-                binding.lastViewCover.visibility = View.GONE
-                binding.playLastEpisode.visibility = View.GONE
                 return@observe
             }
-            binding.lastViewText.visibility = View.VISIBLE
-            binding.lastViewCover.visibility = View.VISIBLE
-            binding.playLastEpisode.visibility = View.VISIBLE
-
             Glide.with(this.requireContext())
                 .load(it.preview)
                 .error(R.drawable.logo)
                 .into(binding.lastViewCover)
+
+            binding.lastViewText.visibility = View.VISIBLE
+            binding.lastViewCover.visibility = View.VISIBLE
+            binding.playLastEpisode.visibility = View.VISIBLE
+
         }
         viewModel.newList.observe(viewLifecycleOwner) {
             setData(binding.newText, binding.newRV, it, true)
@@ -108,14 +104,12 @@ class MainFragment : Fragment() {
 
     private fun setData(text: View, recyclerView: RecyclerView, data: List<Movie>, isNew: Boolean = false) {
         if (data.isEmpty()) {
-            text.visibility = View.GONE
-            recyclerView.visibility = View.GONE
-        } else {
-            text.visibility = View.VISIBLE
-            recyclerView.visibility = View.VISIBLE
-            val adapter = MainAdapter(isNew) { movie -> viewModel.toFilmScreen(movie) }
-            adapter.posterList = data
-            recyclerView.adapter = adapter
+            return
         }
+        val adapter = MainAdapter(isNew) { movie -> viewModel.toFilmScreen(movie) }
+        adapter.posterList = data
+        recyclerView.adapter = adapter
+        text.visibility = View.VISIBLE
+        recyclerView.visibility = View.VISIBLE
     }
 }

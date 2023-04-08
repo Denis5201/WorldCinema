@@ -20,10 +20,12 @@
             android:backgroundTint="@null"
             android:contentDescription="@string/content_description"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/gradient"
@@ -31,9 +33,11 @@
             android:layout_height="400dp"
             android:background="@drawable/gradient"
             android:contentDescription="@string/content_description"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cover" />
+            app:layout_constraintTop_toTopOf="@+id/cover"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/coverButton"
@@ -42,9 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
             android:text="@string/watch"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/cover"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/inTrendText"
@@ -55,8 +61,10 @@
             android:layout_marginTop="32dp"
             android:text="@string/in_trend"
             android:textColor="@color/orange"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cover" />
+            app:layout_constraintTop_toBottomOf="@+id/cover"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/inTrendRV"
@@ -65,11 +73,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inTrendText"
-            tools:listitem="@layout/item_poster" />
+            tools:listitem="@layout/item_poster"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/lastViewText"
@@ -80,8 +90,10 @@
             android:layout_marginTop="32dp"
             android:text="@string/your_watched"
             android:textColor="@color/orange"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inTrendRV" />
+            app:layout_constraintTop_toBottomOf="@+id/inTrendRV"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/lastViewCover"
@@ -90,21 +102,25 @@
             android:layout_marginTop="16dp"
             android:contentDescription="@string/content_description"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastViewText"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/playLastEpisode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/play_button"
             android:contentDescription="@string/content_description"
+            android:src="@drawable/play_button"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/lastViewCover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/lastViewCover" />
+            app:layout_constraintTop_toTopOf="@+id/lastViewCover"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/newText"
@@ -115,8 +131,10 @@
             android:layout_marginTop="32dp"
             android:text="@string/new_movie"
             android:textColor="@color/orange"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastViewCover" />
+            app:layout_constraintTop_toBottomOf="@+id/lastViewCover"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newRV"
@@ -125,11 +143,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/newText"
-            tools:listitem="@layout/item_poster" />
+            tools:listitem="@layout/item_poster"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/forMeText"
@@ -140,8 +160,10 @@
             android:layout_marginTop="32dp"
             android:text="@string/for_your"
             android:textColor="@color/orange"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/newRV" />
+            app:layout_constraintTop_toBottomOf="@+id/newRV"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/forMeRV"
@@ -150,11 +172,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/forMeText"
-            tools:listitem="@layout/item_poster" />
+            tools:listitem="@layout/item_poster"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/interestsButton"
