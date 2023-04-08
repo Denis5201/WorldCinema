@@ -1,13 +1,16 @@
 package com.example.worldcinema.di
 
-import com.example.worldcinema.data.api.AuthApi
-import com.example.worldcinema.data.api.EpisodeApi
-import com.example.worldcinema.data.api.MovieApi
-import com.example.worldcinema.data.api.ProfileApi
+import com.example.worldcinema.data.api.*
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -30,4 +33,21 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideEpisodeApi(retrofit: Retrofit): EpisodeApi = retrofit.create(EpisodeApi::class.java)
+
+    @OptIn(ExperimentalSerializationApi::class)
+    @Provides
+    @Singleton
+    fun provideRefreshApi(): RefreshApi {
+        val refreshRetrofit = Retrofit.Builder()
+            .baseUrl(NetworkModule.BASE_URL)
+            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .client(
+                OkHttpClient.Builder().apply {
+                    val logLevel = HttpLoggingInterceptor.Level.BODY
+                    addInterceptor(HttpLoggingInterceptor().setLevel(logLevel))
+                }.build()
+            )
+            .build()
+        return refreshRetrofit.create(RefreshApi::class.java)
+    }
 }

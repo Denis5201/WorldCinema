@@ -1,5 +1,6 @@
 package com.example.worldcinema.data
 
+import com.example.worldcinema.di.NetworkModule.AUTHORIZATION_HEADER
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -13,7 +14,7 @@ class AuthInterceptor @Inject constructor(
 
         val request = chain.request().newBuilder().apply {
             token?.let {
-                addHeader("Authorization", "Bearer $it")
+                addHeader(AUTHORIZATION_HEADER, "Bearer $it")
             }
         }.build()
         return chain.proceed(request)
