@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_baseFragment_to_episodeFragment"
             app:destination="@id/episodeFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_userChatListFragment"
+            app:destination="@id/userChatListFragment" />
     </fragment>
     <fragment
         android:id="@+id/filmsCollectionFragment"
@@ -66,7 +69,11 @@
         android:id="@+id/editCollectionFragment"
         android:name="com.example.worldcinema.presentation.collections.EditCollectionFragment"
         android:label="fragment_edit_collection"
-        tools:layout="@layout/fragment_edit_collection" />
+        tools:layout="@layout/fragment_edit_collection" >
+        <action
+            android:id="@+id/action_editCollectionFragment_to_choosingCollectionIconFragment"
+            app:destination="@id/choosingCollectionIconFragment" />
+    </fragment>
     <fragment
         android:id="@+id/filmFragment"
         android:name="com.example.worldcinema.presentation.movie.FilmFragment"
@@ -78,6 +85,9 @@
         <argument
             android:name="movie"
             app:argType="string" />
+        <action
+            android:id="@+id/action_filmFragment_to_movieChatFragment"
+            app:destination="@id/movieChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/episodeFragment"
@@ -101,5 +111,27 @@
             android:name="releaseYear"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_episodeFragment_to_movieChatFragment"
+            app:destination="@id/movieChatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userChatListFragment"
+        android:name="com.example.worldcinema.presentation.chats.UserChatListFragment"
+        android:label="fragment_user_chat_list"
+        tools:layout="@layout/fragment_user_chat_list" >
+        <action
+            android:id="@+id/action_userChatListFragment_to_movieChatFragment"
+            app:destination="@id/movieChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieChatFragment"
+        android:name="com.example.worldcinema.presentation.chats.MovieChatFragment"
+        android:label="fragment_movie_chat"
+        tools:layout="@layout/fragment_movie_chat" />
+    <fragment
+        android:id="@+id/choosingCollectionIconFragment"
+        android:name="com.example.worldcinema.presentation.collections.ChoosingCollectionIconFragment"
+        android:label="fragment_choosing_collection_icon"
+        tools:layout="@layout/fragment_choosing_collection_icon" />
 </navigation>

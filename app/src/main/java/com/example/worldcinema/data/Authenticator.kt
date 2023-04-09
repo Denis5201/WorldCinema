@@ -37,7 +37,7 @@ class Authenticator @Inject constructor(
             null
         } else {
             response.request.newBuilder()
-                .addHeader(
+                .header(
                     AUTHORIZATION_HEADER,
                     "Bearer ${newTokensResult!!.getOrNull()!!.accessToken}"
                 )
