@@ -35,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindEpisodeTimeRepository(
         episodeTimeRepositoryImpl: EpisodeTimeRepositoryImpl
     ): EpisodeTimeRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCollectionRepository(
+        collectionRepositoryImpl: CollectionRepositoryImpl
+    ): CollectionRepository
 }

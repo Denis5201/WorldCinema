@@ -39,4 +39,10 @@
     <string name="frames">Кадры</string>
     <string name="episodes">Эпизоды</string>
     <string name="compilation_empty">Новые фильмы \nв подборке закончились</string>
+    <string name="create_collection">Создать коллекцию</string>
+    <string name="change_collection">Изменить коллекцию</string>
+    <string name="name_edit_collection">Название</string>
+    <string name="choosing_icon">Выбрать иконку</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
 </resources>

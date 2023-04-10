@@ -5,13 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavHost
+import androidx.navigation.navGraphViewModels
+import com.example.worldcinema.R
 import com.example.worldcinema.databinding.FragmentChoosingCollectionIconBinding
+import com.example.worldcinema.databinding.ItemIconBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChoosingCollectionIconFragment : Fragment() {
 
     private var _binding: FragmentChoosingCollectionIconBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: EditCollectionViewModel by navGraphViewModels(R.id.editCollectionFragment) {
+        defaultViewModelProviderFactory
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,11 +32,34 @@ class ChoosingCollectionIconFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backChoosingIcon.setOnClickListener {
+            val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+            mainNavHost.navController.navigateUp()
+        }
 
+        val context = requireContext()
+
+        for (i in 1..36) {
+            val newIconBinding =  ItemIconBinding.inflate(layoutInflater)
+            val iconId = context.resources.getIdentifier("$ICON_PREFIX$i", "drawable", context.packageName)
+            newIconBinding.itemIcon.setImageResource(iconId)
+            newIconBinding.itemIcon.setOnClickListener {
+                viewModel.setIcon("$ICON_PREFIX$i")
+                val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+                mainNavHost.navController.popBackStack()
+            }
+            newIconBinding.root.id = View.generateViewId()
+            binding.layout.addView(newIconBinding.root)
+            binding.iconFlow.addView(newIconBinding.root)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val ICON_PREFIX = "collection_icon_"
     }
 }

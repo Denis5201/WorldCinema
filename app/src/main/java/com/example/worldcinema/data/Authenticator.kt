@@ -1,7 +1,7 @@
 package com.example.worldcinema.data
 
+import com.example.worldcinema.Constants
 import com.example.worldcinema.data.api.RefreshApi
-import com.example.worldcinema.di.NetworkModule.AUTHORIZATION_HEADER
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -38,7 +38,7 @@ class Authenticator @Inject constructor(
         } else {
             response.request.newBuilder()
                 .header(
-                    AUTHORIZATION_HEADER,
+                    Constants.AUTHORIZATION_HEADER,
                     "Bearer ${newTokensResult!!.getOrNull()!!.accessToken}"
                 )
                 .build()

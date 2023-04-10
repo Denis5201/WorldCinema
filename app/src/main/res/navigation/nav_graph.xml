@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_baseFragment_to_userChatListFragment"
             app:destination="@id/userChatListFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_editCollectionFragment"
+            app:destination="@id/editCollectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/filmsCollectionFragment"
@@ -64,6 +67,9 @@
         <action
             android:id="@+id/action_filmsCollectionFragment_to_editCollectionFragment"
             app:destination="@id/editCollectionFragment" />
+        <argument
+            android:name="collectionString"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/editCollectionFragment"
@@ -73,6 +79,13 @@
         <action
             android:id="@+id/action_editCollectionFragment_to_choosingCollectionIconFragment"
             app:destination="@id/choosingCollectionIconFragment" />
+        <argument
+            android:name="isChanging"
+            app:argType="boolean" />
+        <argument
+            android:name="collectionString"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/filmFragment"

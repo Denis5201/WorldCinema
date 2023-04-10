@@ -1,7 +1,10 @@
 package com.example.worldcinema.data.repository
 
 import android.util.Log
+import com.example.worldcinema.Constants
 import com.example.worldcinema.data.api.AuthApi
+import com.example.worldcinema.data.api.CollectionApi
+import com.example.worldcinema.data.dto.CollectionFormDto
 import com.example.worldcinema.data.dto.CredentialsDto
 import com.example.worldcinema.data.dto.RegistrationBodyDto
 import com.example.worldcinema.domain.model.Credentials
@@ -15,15 +18,20 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val api: AuthApi,
-    private val sharedPreferencesRepository: SharedPreferencesRepository
+    private val authApi: AuthApi,
+    private val sharedPreferencesRepository: SharedPreferencesRepository,
+    private val collectionApi: CollectionApi
 ) : AuthRepository{
 
     override fun register(registrationForm: RegistrationForm): Flow<Result<Unit>> = flow {
         try {
-            val tokens = api.register(RegistrationBodyDto.fromRegistrationForm(registrationForm))
+            val tokens = authApi.register(RegistrationBodyDto.fromRegistrationForm(registrationForm))
+
             sharedPreferencesRepository.setTokens(tokens.accessToken, tokens.refreshToken)
             sharedPreferencesRepository.setFirstRunFalse()
+
+            collectionApi.createCollection(CollectionFormDto(Constants.FAVOUR_COLLECTION))
+
             emit(Result.success(Unit))
         } catch (e: Exception) {
             Log.e("OPS register", e.message.toString())
@@ -33,7 +41,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun signIn(credentials: Credentials): Flow<Result<Unit>> = flow {
         try {
-            val tokens = api.login(CredentialsDto.fromCredentials(credentials))
+            val tokens = authApi.login(CredentialsDto.fromCredentials(credentials))
             sharedPreferencesRepository.setTokens(tokens.accessToken, tokens.refreshToken)
             sharedPreferencesRepository.setFirstRunFalse()
             emit(Result.success(Unit))

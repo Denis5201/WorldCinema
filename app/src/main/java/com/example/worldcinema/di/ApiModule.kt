@@ -1,5 +1,6 @@
 package com.example.worldcinema.di
 
+import com.example.worldcinema.Constants
 import com.example.worldcinema.data.api.*
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -34,12 +35,16 @@ object ApiModule {
     @Singleton
     fun provideEpisodeApi(retrofit: Retrofit): EpisodeApi = retrofit.create(EpisodeApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideCollectionApi(retrofit: Retrofit): CollectionApi = retrofit.create(CollectionApi::class.java)
+
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideRefreshApi(): RefreshApi {
         val refreshRetrofit = Retrofit.Builder()
-            .baseUrl(NetworkModule.BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .client(
                 OkHttpClient.Builder().apply {

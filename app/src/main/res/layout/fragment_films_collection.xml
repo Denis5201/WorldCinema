@@ -8,24 +8,65 @@
     tools:context=".presentation.collections.FilmsCollectionFragment">
 
 
-    <TextView
-        android:id="@+id/textView4"
+    <ImageView
+        android:id="@+id/editCollection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Фильмы коллекции"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/edit_collection"
+        android:contentDescription="@string/content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/nameCollectionFilms"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/nameCollectionFilms" />
 
-    <Button
-        android:id="@+id/goToEdit"
+    <ImageView
+        android:id="@+id/backCollectionFilm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Редактировать"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/arrow_back"
+        android:contentDescription="@string/content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/nameCollectionFilms"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nameCollectionFilms" />
+
+    <TextView
+        android:id="@+id/nameCollectionFilms"
+        style="@style/h3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/editCollection"
+        app:layout_constraintStart_toEndOf="@+id/backCollectionFilm"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/create_photo" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filmsCollectionRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/nameCollectionFilms"
+        tools:listitem="@layout/item_film_collection" />
+
+    <ProgressBar
+        android:id="@+id/progressBarFilmsCollection"
+        style="@style/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameCollectionFilms" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
