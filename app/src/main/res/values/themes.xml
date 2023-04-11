@@ -15,5 +15,6 @@
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/white</item>
         <item name="alertDialogTheme">@style/dialog</item>
+        <item name="popupMenuStyle">@style/popup_menu_style</item>
     </style>
 </resources>

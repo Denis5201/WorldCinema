@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CollectionInfo(
     val collectionId: String,
-    val name: String,
-    val image: String? = null
+    var name: String,
+    var image: String? = null
 )

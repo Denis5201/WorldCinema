@@ -3,9 +3,7 @@ package com.example.worldcinema.presentation.collections
 import androidx.lifecycle.*
 import com.example.worldcinema.MessageSource
 import com.example.worldcinema.domain.model.CollectionInfo
-import com.example.worldcinema.domain.usecase.CreateCollectionUseCase
-import com.example.worldcinema.domain.usecase.GetCollectionByStringUseCase
-import com.example.worldcinema.domain.usecase.UpdateCollectionUseCase
+import com.example.worldcinema.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +13,9 @@ class EditCollectionViewModel @Inject constructor(
     private val getCollectionByStringUseCase: GetCollectionByStringUseCase,
     private val createCollectionUseCase: CreateCollectionUseCase,
     private val updateCollectionUseCase: UpdateCollectionUseCase,
+    private val deleteCollectionUseCase: DeleteCollectionUseCase,
+    private val isCollectionNameValidUseCase: IsCollectionNameValidUseCase,
+    private val messageSource: MessageSource,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -24,8 +25,7 @@ class EditCollectionViewModel @Inject constructor(
     private val _collectionIcon = MutableLiveData<String>()
     val collectionIcon: LiveData<String> = _collectionIcon
 
-    var collection: CollectionInfo?
-        private set
+    val collection: CollectionInfo?
     val isChanging: Boolean
 
     init {
@@ -35,24 +35,31 @@ class EditCollectionViewModel @Inject constructor(
         collection?.image?.let { _collectionIcon.value = it }
     }
 
-    fun setName(newName: String) {
-
-    }
-
     fun setIcon(iconName: String) {
         _collectionIcon.value = iconName
     }
 
     fun saveCollection(name: String) {
+        if (name.isEmpty()) {
+            setErrorMessage(MessageSource.COLLECTION_NAME_EMPTY)
+            return
+        }
+        if (!isCollectionNameValidUseCase(name)) {
+            setErrorMessage(MessageSource.CUSTOM_FAVOUR_COLLECTION)
+            return
+        }
         if (isChanging) {
             viewModelScope.launch {
                 updateCollectionUseCase(
-                    CollectionInfo(collection!!.collectionId, name, collectionIcon.value)
+                    CollectionInfo(collection!!.collectionId, name, _collectionIcon.value)
+                )
+                _uiState.value = _uiState.value!!.copy(
+                    goBackAfterSave = true
                 )
             }
         } else {
             viewModelScope.launch {
-                createCollectionUseCase(name).collect { result ->
+                createCollectionUseCase(name, _collectionIcon.value).collect { result ->
                     result.onSuccess {
                         _uiState.value = _uiState.value!!.copy(
                             goBackAfterSave = true
@@ -69,12 +76,33 @@ class EditCollectionViewModel @Inject constructor(
     }
 
     fun deleteCollection() {
-
+        viewModelScope.launch {
+            deleteCollectionUseCase(collection!!.collectionId).collect { result ->
+                result.onSuccess {
+                    _uiState.value = _uiState.value!!.copy(
+                        goBackAfterSave = true
+                    )
+                }.onFailure {
+                    _uiState.value = _uiState.value!!.copy(
+                        isShowMessage = true,
+                        message = it.message ?: MessageSource.ERROR
+                    )
+                }
+            }
+        }
     }
 
     fun setDefaultStatus() {
         _uiState.value = _uiState.value!!.copy(
-            isShowMessage = false
+            isShowMessage = false,
+            goBackAfterSave = false
+        )
+    }
+
+    private fun setErrorMessage(reason: Int) {
+        _uiState.value = _uiState.value!!.copy(
+            isShowMessage = true,
+            message = messageSource.getMessage(reason)
         )
     }
 }

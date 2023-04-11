@@ -46,6 +46,7 @@ class SharedPref @Inject constructor(
         preferences.edit()
             .remove(ACCESS_TOKEN)
             .remove(REFRESH_TOKEN)
+            .remove(USER_ID)
             .apply()
     }
 
@@ -53,6 +54,7 @@ class SharedPref @Inject constructor(
         const val PREFERENCE_NAME = "pref"
         const val ACCESS_TOKEN = "token"
         const val REFRESH_TOKEN = "refresh_token"
+        const val USER_ID = "user_id"
         const val FIRST_RUN = "first_run"
     }
 }

@@ -9,6 +9,7 @@ import androidx.navigation.NavHost
 import androidx.navigation.navGraphViewModels
 import com.example.worldcinema.R
 import com.example.worldcinema.databinding.FragmentEditCollectionBinding
+import com.example.worldcinema.presentation.createErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,10 +38,14 @@ class EditCollectionFragment : Fragment() {
             mainNavHost.navController.navigateUp()
         }
 
+        binding.saveCollection.setOnClickListener {
+            viewModel.saveCollection(binding.nameEditCollection.text.toString())
+        }
+
         if (viewModel.isChanging) {
             binding.deleteCollection.visibility = View.VISIBLE
             binding.deleteCollection.setOnClickListener {
-
+                viewModel.deleteCollection()
             }
         }
 
@@ -61,10 +66,21 @@ class EditCollectionFragment : Fragment() {
         }
 
         binding.chossingIconCollection.setOnClickListener {
-            viewModel.setName(binding.nameEditCollection.text.toString())
-
             val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
             mainNavHost.navController.navigate(R.id.action_editCollectionFragment_to_choosingCollectionIconFragment)
+        }
+
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            if (it.goBackAfterSave) {
+                val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+                mainNavHost.navController.popBackStack()
+
+                viewModel.setDefaultStatus()
+            } else if (it.isShowMessage) {
+                createErrorDialog(this.requireContext(), it.message) {
+                    viewModel.setDefaultStatus()
+                }.show()
+            }
         }
     }
 

@@ -8,5 +8,9 @@ interface SharedPreferencesRepository {
 
     fun setTokens(accessToken: String, refreshToken: String)
 
-    fun clearTokens()
+    fun getUserId(): String?
+
+    fun setUserId(userId: String)
+
+    fun clearUserInfo()
 }

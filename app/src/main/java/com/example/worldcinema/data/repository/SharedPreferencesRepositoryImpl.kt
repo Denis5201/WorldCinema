@@ -20,7 +20,15 @@ class SharedPreferencesRepositoryImpl @Inject constructor(
         sharedPref.setString(SharedPref.REFRESH_TOKEN, refreshToken)
     }
 
-    override fun clearTokens() {
+    override fun getUserId(): String? {
+        return sharedPref.getString(SharedPref.USER_ID)
+    }
+
+    override fun setUserId(userId: String) {
+        sharedPref.setString(SharedPref.USER_ID, userId)
+    }
+
+    override fun clearUserInfo() {
         sharedPref.clearTokens()
     }
 

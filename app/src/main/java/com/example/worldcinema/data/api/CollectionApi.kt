@@ -4,6 +4,7 @@ import com.example.worldcinema.data.dto.CollectionFormDto
 import com.example.worldcinema.data.dto.CollectionListItemDto
 import com.example.worldcinema.data.dto.MovieDto
 import com.example.worldcinema.data.dto.MovieValueDto
+import retrofit2.Response
 import retrofit2.http.*
 
 interface CollectionApi {
@@ -15,7 +16,7 @@ interface CollectionApi {
     suspend fun createCollection(@Body body: CollectionFormDto): CollectionListItemDto
 
     @DELETE("collections/{collectionId}")
-    suspend fun deleteCollection(@Path("collectionId") collectionId: String)
+    suspend fun deleteCollection(@Path("collectionId") collectionId: String): Response<Unit>
 
     @GET("collections/{collectionId}/movies")
     suspend fun getCollectionFilms(@Path("collectionId") collectionId: String): List<MovieDto>
@@ -30,5 +31,5 @@ interface CollectionApi {
     suspend fun deleteFilmFromCollection(
         @Path("collectionId") collectionId: String,
         @Query("movieId") movieId: String
-    )
+    ): Response<Unit>
 }

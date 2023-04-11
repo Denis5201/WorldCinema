@@ -2,9 +2,11 @@ package com.example.worldcinema.presentation.movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHost
@@ -77,8 +79,12 @@ class EpisodeFragment : Fragment() {
                 return@observe
             }
             binding.movieGroup.visibility = View.VISIBLE
+
             if (it.chatInfo != null) {
                 binding.movieChatEpisode.visibility = View.VISIBLE
+                binding.movieChatEpisode.setOnClickListener {
+                    //GO to CHAT Screen !!!
+                }
             }
 
             Glide.with(this.requireContext())
@@ -107,14 +113,18 @@ class EpisodeFragment : Fragment() {
 
         viewModel.uiState.observe(viewLifecycleOwner) {
             if (it.mayNavigateBack) {
+
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
                 mainNavHost.navController.navigateUp()
                 viewModel.setDefaultStatus()
+
             } else if (it.goToChatScreen) {
+
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
                 mainNavHost.navController.navigateUp() //!!!!!!!!!!!!TO CHAT
                 viewModel.setDefaultStatus()
-            } else  if (it.isShowMessage) {
+
+            } else if (it.isShowMessage) {
                 createErrorDialog(this.requireContext(), it.message) {
                     viewModel.setDefaultStatus()
                 }.show()
@@ -122,6 +132,44 @@ class EpisodeFragment : Fragment() {
             if (!it.isLoadingEpisode) {
                 binding.progressBarEpisode.visibility = View.GONE
             }
+        }
+
+        viewModel.collectionList.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                return@observe
+            }
+            binding.plusEpisode.visibility = View.VISIBLE
+
+            val popupMenu = PopupMenu(requireContext(), binding.plusEpisode)
+            it.forEachIndexed { index, collection ->
+                popupMenu.menu.add(Menu.NONE, Menu.NONE, index, collection.name)
+            }
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                viewModel.addFilmInCollection(menuItem.order)
+                true
+            }
+
+            binding.plusEpisode.setOnClickListener {
+                popupMenu.show()
+            }
+        }
+
+        viewModel.alreadyInFavour.observe(viewLifecycleOwner) {
+            if (it == null) {
+                return@observe
+            }
+            binding.heartEpisode.visibility = View.VISIBLE
+
+            if (it) {
+                binding.heartEpisode.setImageResource(R.drawable.heart_filled)
+            } else {
+                binding.heartEpisode.setImageResource(R.drawable.heart)
+            }
+
+            binding.heartEpisode.setOnClickListener {
+                viewModel.changeFilmFavourStatus()
+            }
+
         }
     }
 

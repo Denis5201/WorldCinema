@@ -87,27 +87,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/heartEpisode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/content_description"
-        android:src="@drawable/heart"
-        app:layout_constraintBottom_toBottomOf="@+id/moviePosterEpisode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/moviePosterEpisode" />
+        <ImageView
+            android:id="@+id/heartEpisode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/heart"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/moviePosterEpisode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/moviePosterEpisode"
+            tools:visibility="visible" />
 
-    <ImageView
-        android:id="@+id/plusEpisode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="@string/content_description"
-        android:src="@drawable/plus"
-        app:layout_constraintBottom_toBottomOf="@+id/heartEpisode"
-        app:layout_constraintEnd_toStartOf="@+id/heartEpisode"
-        app:layout_constraintTop_toTopOf="@+id/heartEpisode" />
+        <ImageView
+            android:id="@+id/plusEpisode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/plus"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/heartEpisode"
+            app:layout_constraintEnd_toStartOf="@+id/heartEpisode"
+            app:layout_constraintTop_toTopOf="@+id/heartEpisode"
+            tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/movieChatEpisode"
@@ -166,7 +170,7 @@
             android:id="@+id/movieGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="heartEpisode,plusEpisode,movieChatEpisode,movieNameEpisode,moviePosterEpisode"
+            app:constraint_referenced_ids="movieChatEpisode,movieNameEpisode,moviePosterEpisode"
             tools:layout_editor_absoluteX="154dp"
             tools:layout_editor_absoluteY="567dp" />
 

@@ -9,9 +9,11 @@ import com.example.worldcinema.R
 import com.example.worldcinema.databinding.ItemFilmCollectionBinding
 import com.example.worldcinema.domain.model.Movie
 
-class FilmsCollectionAdapter : RecyclerView.Adapter<FilmsCollectionAdapter.FilmsViewHolder>() {
+class FilmsCollectionAdapter(
+    private val click: (Movie) -> Unit
+) : RecyclerView.Adapter<FilmsCollectionAdapter.FilmsViewHolder>() {
 
-    var movieList: List<Movie> = emptyList()
+    var movieList: MutableList<Movie> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -25,12 +27,12 @@ class FilmsCollectionAdapter : RecyclerView.Adapter<FilmsCollectionAdapter.Films
     override fun getItemCount(): Int = movieList.size
 
     override fun onBindViewHolder(holder: FilmsViewHolder, position: Int) {
-        holder.bind(movieList[position])
+        holder.bind(movieList[position], click)
     }
 
     class FilmsViewHolder(private val binding: ItemFilmCollectionBinding) : ViewHolder(binding.root) {
 
-        fun bind(movie: Movie) {
+        fun bind(movie: Movie, click: (Movie) -> Unit) {
 
             Glide.with(this.itemView.context)
                 .load(movie.poster)
@@ -39,6 +41,15 @@ class FilmsCollectionAdapter : RecyclerView.Adapter<FilmsCollectionAdapter.Films
 
             binding.nameFilmCollectionItem.text = movie.name
             binding.descriptionFilmCollectionItem.text = movie.description
+
+            binding.root.setOnClickListener {
+                click(movie)
+            }
         }
+    }
+
+    fun deleteFilm(position: Int) {
+        movieList.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

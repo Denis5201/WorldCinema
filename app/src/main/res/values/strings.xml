@@ -45,4 +45,7 @@
     <string name="choosing_icon">Выбрать иконку</string>
     <string name="save">Сохранить</string>
     <string name="delete">Удалить</string>
+    <string name="collection_name_empty">Имя коллекции не может быть пустым</string>
+    <string name="custom_favour_collection">Нельзя создать коллекцию с именем "Избранное"</string>
+    <string name="favour_collection_not_found">Коллекция "Избранное" не найдена</string>
 </resources>

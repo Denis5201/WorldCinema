@@ -8,7 +8,11 @@ interface CollectionRepository {
 
     fun getCollections(): Flow<Result<List<CollectionInfo>>>
 
-    fun createCollection(nameCollection: String): Flow<Result<CollectionInfo>>
+    fun createCollection(
+        nameCollection: String, imageCollection: String?
+    ): Flow<Result<CollectionInfo>>
+
+    suspend fun updateCollection(collectionInfo: CollectionInfo)
 
     fun deleteCollection(collectionId: String): Flow<Result<Unit>>
 

@@ -9,6 +9,6 @@ class CreateCollectionUseCase @Inject constructor(
     private val repository: CollectionRepository
 ) {
 
-    operator fun invoke(nameCollection: String): Flow<Result<CollectionInfo>> =
-        repository.createCollection(nameCollection)
+    operator fun invoke(nameCollection: String, imageCollection: String?): Flow<Result<CollectionInfo>> =
+        repository.createCollection(nameCollection, imageCollection)
 }

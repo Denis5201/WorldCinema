@@ -1,11 +1,13 @@
 package com.example.worldcinema.presentation.base
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHost
@@ -41,6 +43,8 @@ class CompilationFragment : Fragment(), CardStackListener {
             findNavController().popBackStack()
         }
 
+        viewModel.getFavourFilms()
+
         binding.currentMovieName.isSelected = true
 
         manager = CardStackLayoutManager(requireContext(), this)
@@ -60,13 +64,26 @@ class CompilationFragment : Fragment(), CardStackListener {
             viewModel.toFilmScreen(adapter.movieList[manager.topPosition])
         }
         binding.heartButton.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Right)
-                .setDuration(Duration.Slow.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
-            binding.cardStack.swipe()
+            viewModel.changeFilmFavourStatus(adapter.movieList[manager.topPosition].movieId)
+        }
+
+        viewModel.alreadyInFavour.observe(viewLifecycleOwner) {
+            if (it == null) {
+                return@observe
+            }
+            if (it) {
+                binding.heartButton.setImageResource(R.drawable.collection_icon_19)
+                binding.heartButton.setColorFilter(
+                    ContextCompat.getColor(requireContext(), R.color.orange), PorterDuff.Mode.SRC_IN
+                )
+            } else {
+                binding.heartButton.setImageResource(R.drawable.small_heart)
+            }
+        }
+        viewModel.listFavourMovie.observe(viewLifecycleOwner) {
+            if (manager.topPosition < adapter.movieList.size && adapter.movieList.isNotEmpty()) {
+                viewModel.isFilmInFavour(adapter.movieList[manager.topPosition].movieId)
+            }
         }
 
         viewModel.compilation.observe(viewLifecycleOwner) {
@@ -111,7 +128,6 @@ class CompilationFragment : Fragment(), CardStackListener {
                 viewModel.itemSwiped()
             }
             Direction.Right -> {
-                //Add to Favourites Collection
                 viewModel.itemSwiped()
             }
             else -> {}
@@ -127,6 +143,7 @@ class CompilationFragment : Fragment(), CardStackListener {
 
     override fun onCardAppeared(view: View?, position: Int) {
         binding.currentMovieName.text = adapter.movieList[position].name
+        viewModel.isFilmInFavour(adapter.movieList[position].movieId)
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {

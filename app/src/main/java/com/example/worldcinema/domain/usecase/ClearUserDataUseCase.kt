@@ -7,5 +7,5 @@ class ClearUserDataUseCase @Inject constructor(
     private val repository: SharedPreferencesRepository
 ) {
 
-    operator fun invoke() = repository.clearTokens()
+    operator fun invoke() = repository.clearUserInfo()
 }

@@ -1,7 +1,9 @@
 package com.example.worldcinema.presentation.movie
 
 import androidx.lifecycle.*
+import com.example.worldcinema.Constants
 import com.example.worldcinema.MessageSource
+import com.example.worldcinema.domain.model.CollectionInfo
 import com.example.worldcinema.domain.model.Episode
 import com.example.worldcinema.domain.model.Movie
 import com.example.worldcinema.domain.usecase.*
@@ -16,6 +18,11 @@ class EpisodeViewModel @Inject constructor(
     private val getEpisodeCurrentTimeUseCase: GetEpisodeCurrentTimeUseCase,
     private val saveEpisodeCurrentTimeUseCase: SaveEpisodeCurrentTimeUseCase,
     private val calculateReleaseYearsUseCase: CalculateReleaseYearsUseCase,
+    private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val getFilmsCollectionUseCase: GetFilmsCollectionUseCase,
+    private val isFilmInFavourUseCase: IsFilmInFavourUseCase,
+    private val addFilmInCollectionUseCase: AddFilmInCollectionUseCase,
+    private val changeFavourFilmStatusUseCase: ChangeFavourFilmStatusUseCase,
     getMovieByStringUseCase: GetMovieByStringUseCase,
     getEpisodeByStringUseCase: GetEpisodeByStringUseCase,
     savedStateHandle: SavedStateHandle
@@ -36,6 +43,15 @@ class EpisodeViewModel @Inject constructor(
     private val _timePosition = MutableLiveData<Long>()
     val timePosition: LiveData<Long> = _timePosition
 
+    private val _collectionList = MutableLiveData(emptyList<CollectionInfo>())
+    val collectionList: LiveData<List<CollectionInfo>> =_collectionList
+
+    private val _alreadyInFavour = MutableLiveData<Boolean>()
+    val alreadyInFavour: LiveData<Boolean> = _alreadyInFavour
+
+    private var favourId: String = ""
+    private var isChangingStatus = false
+
     init {
         val args = EpisodeFragmentArgs.fromSavedStateHandle(savedStateHandle)
         val movieString = args.movie
@@ -48,6 +64,7 @@ class EpisodeViewModel @Inject constructor(
             _episode.value = getEpisodeByStringUseCase(episodeString)
             getVideoPosition(_episode.value!!.episodeId)
             _releaseYears.value = args.releaseYear!!
+            getCollectionList()
         }
     }
 
@@ -71,6 +88,49 @@ class EpisodeViewModel @Inject constructor(
                         isShowMessage = true,
                         message = it.message ?: MessageSource.ERROR
                     )
+                }
+            }
+        }
+    }
+
+    fun addFilmInCollection(index: Int) {
+        if (_movie.value?.movieId == null) {
+            return
+        }
+        viewModelScope.launch {
+            addFilmInCollectionUseCase(
+                _collectionList.value!![index].collectionId, _movie.value!!.movieId
+            ).collect { result ->
+                result.onSuccess {
+
+                }.onFailure {
+                    _uiState.value = _uiState.value!!.copy(
+                        isShowMessage = true,
+                        message = it.message ?: MessageSource.ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    fun changeFilmFavourStatus() {
+        if (isChangingStatus) {
+            return
+        }
+        isChangingStatus = true
+        viewModelScope.launch {
+            changeFavourFilmStatusUseCase(
+                favourId, _movie.value!!.movieId, alreadyInFavour.value!!
+            ).collect { result ->
+                result.onSuccess {
+                    _alreadyInFavour.value = !(_alreadyInFavour.value!!)
+                    isChangingStatus = false
+                }.onFailure {
+                    _uiState.value = _uiState.value!!.copy(
+                        isShowMessage = true,
+                        message = it.message ?: MessageSource.ERROR
+                    )
+                    isChangingStatus = false
                 }
             }
         }
@@ -127,9 +187,50 @@ class EpisodeViewModel @Inject constructor(
 
     private fun getMovieById(movieId: String) {
         viewModelScope.launch {
-            getLastViewMovieByIdUseCase(movieId).collect {result ->
+            getLastViewMovieByIdUseCase(movieId).collect { result ->
                 result.onSuccess {
                     _movie.value = it
+                    getCollectionList()
+                }.onFailure {
+                    _uiState.value = _uiState.value!!.copy(
+                        isShowMessage = true,
+                        message = it.message ?: MessageSource.ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getCollectionList() {
+        viewModelScope.launch {
+            getCollectionsUseCase().collect { result ->
+                result.onSuccess { list ->
+                    _collectionList.value = list.filter {
+                        if (it.name != Constants.FAVOUR_COLLECTION)  {
+                            true
+                        } else {
+                            isFilmInFavour(it.collectionId)
+                            favourId = it.collectionId
+                            false
+                        }
+                    }
+                }.onFailure {
+                    _uiState.value = _uiState.value!!.copy(
+                        isShowMessage = true,
+                        message = it.message ?: MessageSource.ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    private fun isFilmInFavour(collectionId: String) {
+        viewModelScope.launch {
+            getFilmsCollectionUseCase(collectionId).collect { result ->
+                result.onSuccess {
+                    if (_movie.value?.movieId != null) {
+                        _alreadyInFavour.value = isFilmInFavourUseCase(_movie.value!!.movieId, it)
+                    }
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
                         isShowMessage = true,

@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHost
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.worldcinema.Constants
 import com.example.worldcinema.R
 import com.example.worldcinema.databinding.FragmentFilmsCollectionBinding
@@ -37,16 +39,39 @@ class FilmsCollectionFragment : Fragment() {
             mainNavHost.navController.navigateUp()
         }
 
+        val adapter = FilmsCollectionAdapter { movie -> viewModel.toFilm(movie) }
+
         if (viewModel.collectionInfo.name == Constants.FAVOUR_COLLECTION) {
             binding.editCollection.visibility = View.GONE
+        } else {
+            binding.editCollection.setOnClickListener {
+                viewModel.toEditCollection()
+            }
         }
 
         binding.nameCollectionFilms.text = viewModel.collectionInfo.name
 
         viewModel.filmsCollection.observe(viewLifecycleOwner) {
-            val adapter = FilmsCollectionAdapter()
-            adapter.movieList = it
+            adapter.movieList = it.toMutableList()
             binding.filmsCollectionRV.adapter = adapter
+
+            val helperCallback = object : ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean { return false }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.absoluteAdapterPosition
+                    viewModel.deleteFilm(adapter.movieList[position].movieId)
+                    adapter.deleteFilm(position)
+                }
+            }
+            val itemTouchHelper = ItemTouchHelper(helperCallback)
+            itemTouchHelper.attachToRecyclerView(binding.filmsCollectionRV)
         }
 
         viewModel.uiState.observe(viewLifecycleOwner) {
@@ -54,7 +79,16 @@ class FilmsCollectionFragment : Fragment() {
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
 
                 val directions = FilmsCollectionFragmentDirections.actionFilmsCollectionFragmentToEditCollectionFragment(
-                    true, it.collectionString
+                    true, viewModel.collectionString
+                )
+                mainNavHost.navController.navigate(directions)
+
+                viewModel.setDefaultStatus()
+            } else if (it.goToFilm) {
+                val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+
+                val directions = FilmsCollectionFragmentDirections.actionFilmsCollectionFragmentToFilmFragment(
+                    it.movieString
                 )
                 mainNavHost.navController.navigate(directions)
 
