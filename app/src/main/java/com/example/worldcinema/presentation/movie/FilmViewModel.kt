@@ -4,7 +4,10 @@ import androidx.lifecycle.*
 import com.example.worldcinema.MessageSource
 import com.example.worldcinema.domain.model.Episode
 import com.example.worldcinema.domain.model.Movie
-import com.example.worldcinema.domain.usecase.*
+import com.example.worldcinema.domain.usecase.CalculateReleaseYearsUseCase
+import com.example.worldcinema.domain.usecase.GetEpisodesUseCase
+import com.example.worldcinema.domain.usecase.GetMovieByStringUseCase
+import com.example.worldcinema.domain.usecase.GetStringEpisodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +18,6 @@ class FilmViewModel @Inject constructor(
     private val getStringEpisodeUseCase: GetStringEpisodeUseCase,
     private val calculateReleaseYearsUseCase: CalculateReleaseYearsUseCase,
     getMovieByStringUseCase: GetMovieByStringUseCase,
-    getAgeColorStringUseCase: GetAgeColorStringUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -27,12 +29,10 @@ class FilmViewModel @Inject constructor(
 
     val movieString: String
     val movie: Movie
-    val ageColor: String
 
     init {
         movieString = FilmFragmentArgs.fromSavedStateHandle(savedStateHandle).movie
         movie = getMovieByStringUseCase(movieString)
-        ageColor = getAgeColorStringUseCase(movie.age)
         getEpisodes()
     }
 

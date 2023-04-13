@@ -18,4 +18,8 @@
     <color name="border">#A8A8A8</color>
     <color name="unplayed">#3A3A3C</color>
     <color name="buffered">#F26E45</color>
+    <color name="transparent">#00000000</color>
+    <color name="age6">#FAD5C9</color>
+    <color name="age12">#F4A992</color>
+    <color name="age16">#FFF26E45</color>
 </resources>

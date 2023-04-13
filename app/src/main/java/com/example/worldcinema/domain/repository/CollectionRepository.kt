@@ -12,7 +12,7 @@ interface CollectionRepository {
         nameCollection: String, imageCollection: String?
     ): Flow<Result<CollectionInfo>>
 
-    suspend fun updateCollection(collectionInfo: CollectionInfo)
+    suspend fun upsertCollection(collectionInfo: CollectionInfo)
 
     fun deleteCollection(collectionId: String): Flow<Result<Unit>>
 

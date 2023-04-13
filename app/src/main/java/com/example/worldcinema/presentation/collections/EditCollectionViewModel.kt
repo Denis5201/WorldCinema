@@ -36,7 +36,9 @@ class EditCollectionViewModel @Inject constructor(
     }
 
     fun setIcon(iconName: String) {
-        _collectionIcon.value = iconName
+        if (iconName.isNotEmpty()) {
+            _collectionIcon.value = iconName
+        }
     }
 
     fun saveCollection(name: String) {

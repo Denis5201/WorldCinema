@@ -1,10 +1,10 @@
 package com.example.worldcinema.presentation.movie
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHost
@@ -50,7 +50,9 @@ class FilmFragment : Fragment() {
         }
 
         binding.age.text = viewModel.movie.age
-        binding.age.setTextColor(Color.parseColor(viewModel.ageColor))
+        binding.age.setTextColor(
+            ContextCompat.getColor(requireContext(), getIdColor(viewModel.movie.age))
+        )
 
         viewModel.movie.tags.forEach { tag ->
             val newTagBinding = ItemTagBinding.inflate(layoutInflater)
@@ -101,6 +103,16 @@ class FilmFragment : Fragment() {
             if (!it.isLoadingEpisodes) {
                 binding.progressBarFilm.visibility = View.GONE
             }
+        }
+    }
+
+    private fun getIdColor(colorString: String): Int {
+        return when(colorString) {
+            "0+" -> R.color.transparent
+            "6+" -> R.color.age6
+            "12+" -> R.color.age12
+            "16+" -> R.color.age16
+            else -> R.color.orange
         }
     }
 

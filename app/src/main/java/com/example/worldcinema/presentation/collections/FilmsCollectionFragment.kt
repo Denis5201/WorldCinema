@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavHost
@@ -66,8 +67,22 @@ class FilmsCollectionFragment : Fragment() {
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.absoluteAdapterPosition
-                    viewModel.deleteFilm(adapter.movieList[position].movieId)
-                    adapter.deleteFilm(position)
+
+                    val dialog = AlertDialog.Builder(requireContext())
+                        .setCancelable(false)
+                        .setTitle(R.string.warning)
+                        .setMessage(R.string.delete_film)
+                        .setPositiveButton(R.string.delete) { dialog, _ ->
+                            viewModel.deleteFilm(adapter.movieList[position].movieId)
+                            adapter.deleteFilm(position)
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton(R.string.cancel) { dialog, _ ->
+                            adapter.notifyItemChanged(position)
+                            dialog.dismiss()
+                        }
+                        .create()
+                    dialog.show()
                 }
             }
             val itemTouchHelper = ItemTouchHelper(helperCallback)

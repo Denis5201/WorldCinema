@@ -12,8 +12,8 @@ interface CollectionDao {
     @Query("SELECT * FROM collection WHERE userId = :userId")
     fun getUserCollectionList(userId: String): List<CollectionEntity>
 
-    @Update
-    suspend fun updateCollection(collectionEntity: CollectionEntity)
+    @Upsert
+    suspend fun upsertCollection(collectionEntity: CollectionEntity)
 
     @Query("DELETE FROM collection WHERE collectionId = :collectionId")
     suspend fun deleteCollection(collectionId: String)

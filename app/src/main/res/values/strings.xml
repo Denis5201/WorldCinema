@@ -48,4 +48,7 @@
     <string name="collection_name_empty">Имя коллекции не может быть пустым</string>
     <string name="custom_favour_collection">Нельзя создать коллекцию с именем "Избранное"</string>
     <string name="favour_collection_not_found">Коллекция "Избранное" не найдена</string>
+    <string name="warning">Предупреждение</string>
+    <string name="delete_film">Удалить фильм из коллекции?</string>
+    <string name="cancel">Отмена</string>
 </resources>

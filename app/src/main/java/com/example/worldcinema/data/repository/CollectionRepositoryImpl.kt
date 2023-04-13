@@ -68,10 +68,10 @@ class CollectionRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun updateCollection(collectionInfo: CollectionInfo) {
+    override suspend fun upsertCollection(collectionInfo: CollectionInfo) {
         val userId = getUserId()
 
-        dao.updateCollection(
+        dao.upsertCollection(
             CollectionEntity(
                 collectionId = collectionInfo.collectionId,
                 userId = userId,

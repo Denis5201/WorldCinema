@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.NavHost
-import androidx.navigation.navGraphViewModels
+import com.example.worldcinema.Constants
 import com.example.worldcinema.R
 import com.example.worldcinema.databinding.FragmentChoosingCollectionIconBinding
 import com.example.worldcinema.databinding.ItemIconBinding
@@ -18,9 +20,6 @@ class ChoosingCollectionIconFragment : Fragment() {
     private var _binding: FragmentChoosingCollectionIconBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: EditCollectionViewModel by navGraphViewModels(R.id.editCollectionFragment) {
-        defaultViewModelProviderFactory
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +43,10 @@ class ChoosingCollectionIconFragment : Fragment() {
             val iconId = context.resources.getIdentifier("$ICON_PREFIX$i", "drawable", context.packageName)
             newIconBinding.itemIcon.setImageResource(iconId)
             newIconBinding.itemIcon.setOnClickListener {
-                viewModel.setIcon("$ICON_PREFIX$i")
+                setFragmentResult(
+                    Constants.ICON_COLLECTION_REQUEST,
+                    bundleOf(Constants.ICON_PARAMETER to "$ICON_PREFIX$i")
+                )
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
                 mainNavHost.navController.popBackStack()
             }

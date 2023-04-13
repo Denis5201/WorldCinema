@@ -9,5 +9,5 @@ class UpdateCollectionUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(collectionInfo: CollectionInfo) =
-        repository.updateCollection(collectionInfo)
+        repository.upsertCollection(collectionInfo)
 }
