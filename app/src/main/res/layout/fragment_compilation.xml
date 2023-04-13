@@ -116,7 +116,7 @@
         android:clipToPadding="false"
         android:paddingStart="24dp"
         android:paddingTop="70dp"
-        android:paddingRight="24dp"
+        android:paddingEnd="24dp"
         android:paddingBottom="120dp"
         app:layout_constraintBottom_toTopOf="@id/movieButton"
         app:layout_constraintEnd_toEndOf="parent"
