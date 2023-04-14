@@ -44,7 +44,7 @@ class FilmFragment : Fragment() {
             .into(binding.posterFilm)
 
         binding.watchEpisode.setOnClickListener {
-            if (viewModel.episodes.value != null) {
+            if (!viewModel.episodes.value.isNullOrEmpty()) {
                 viewModel.toEpisodeScreen(viewModel.episodes.value!!.first().episodeId)
             }
         }
