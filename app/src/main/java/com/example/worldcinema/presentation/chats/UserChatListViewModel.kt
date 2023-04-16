@@ -41,6 +41,14 @@ class UserChatListViewModel @Inject constructor(
         }
     }
 
+    fun goToChat(chatInfo: ChatInfo) {
+        _uiState.value = _uiState.value!!.copy(
+            chatId = chatInfo.chatId,
+            chatName = chatInfo.chatName,
+            goToMovieChat = true
+        )
+    }
+
     fun setDefaultStatus() {
         _uiState.value = _uiState.value!!.copy(
             isShowMessage = false,

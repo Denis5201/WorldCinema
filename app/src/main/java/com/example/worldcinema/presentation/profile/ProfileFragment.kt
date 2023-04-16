@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -124,6 +125,13 @@ class ProfileFragment : Fragment() {
                 .circleCrop()
                 .into(binding.avatarProfile)
         }
+
+        val listener = OnClickListener {
+            val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+            mainNavHost.navController.navigate(R.id.action_baseFragment_to_userChatListFragment)
+        }
+        binding.userChats.setOnClickListener(listener)
+        binding.userChatsImage.setOnClickListener(listener)
     }
 
     override fun onDestroyView() {

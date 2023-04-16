@@ -245,7 +245,8 @@ class EpisodeViewModel @Inject constructor(
         if (reason == CHAT) {
             _uiState.value = _uiState.value!!.copy(
                 goToChatScreen = true,
-                chatId = _movie.value!!.chatInfo!!.chatId
+                chatId = _movie.value!!.chatInfo!!.chatId,
+                chatName = _movie.value!!.chatInfo!!.name
             )
         } else if (reason == BACK) {
             _uiState.value = _uiState.value!!.copy(

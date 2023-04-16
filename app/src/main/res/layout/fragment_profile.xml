@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/avatarProfile" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/userChatsImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -91,7 +91,7 @@
         android:src="@drawable/history"
         android:contentDescription="@string/content_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/userChatsImage" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -119,9 +119,9 @@
         android:layout_marginStart="16dp"
         android:text="@string/discussion"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintBottom_toBottomOf="@+id/userChatsImage"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+        app:layout_constraintTop_toTopOf="@+id/userChatsImage" />
 
     <TextView
         android:id="@+id/textView5"
@@ -152,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="exit,nameProfile,emailProfile,changeAvatar,avatarProfile,userChats,textView5,textView7,imageView7,imageView5,imageView6"
+        app:constraint_referenced_ids="exit,nameProfile,emailProfile,changeAvatar,avatarProfile,userChats,textView5,textView7,imageView7,userChatsImage,imageView6"
         tools:visibility="visible" />
 
     <ProgressBar

@@ -144,7 +144,13 @@
         android:id="@+id/movieChatFragment"
         android:name="com.example.worldcinema.presentation.chats.MovieChatFragment"
         android:label="fragment_movie_chat"
-        tools:layout="@layout/fragment_movie_chat" />
+        tools:layout="@layout/fragment_movie_chat" >
+        <argument android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="chatName"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/choosingCollectionIconFragment"
         android:name="com.example.worldcinema.presentation.collections.ChoosingCollectionIconFragment"

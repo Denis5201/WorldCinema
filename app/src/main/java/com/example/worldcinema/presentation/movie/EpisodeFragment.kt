@@ -83,7 +83,8 @@ class EpisodeFragment : Fragment() {
             if (it.chatInfo != null) {
                 binding.movieChatEpisode.visibility = View.VISIBLE
                 binding.movieChatEpisode.setOnClickListener {
-                    //GO to CHAT Screen !!!
+                    viewModel.saveVideoPosition(player.currentPosition, EpisodeViewModel.CHAT)
+                    player.pause()
                 }
             }
 
@@ -121,7 +122,10 @@ class EpisodeFragment : Fragment() {
             } else if (it.goToChatScreen) {
 
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
-                mainNavHost.navController.navigateUp() //!!!!!!!!!!!!TO CHAT
+
+                val directions = EpisodeFragmentDirections.actionEpisodeFragmentToMovieChatFragment(it.chatId, it.chatName)
+                mainNavHost.navController.navigate(directions)
+
                 viewModel.setDefaultStatus()
 
             } else if (it.isShowMessage) {

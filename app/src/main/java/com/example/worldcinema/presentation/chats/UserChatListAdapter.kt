@@ -13,7 +13,9 @@ import com.example.worldcinema.R
 import com.example.worldcinema.databinding.ItemChatBinding
 import com.example.worldcinema.domain.model.ChatInfo
 
-class UserChatListAdapter : RecyclerView.Adapter<UserChatListAdapter.ChatViewHolder>() {
+class UserChatListAdapter(
+    private val click: (ChatInfo) -> Unit
+) : RecyclerView.Adapter<UserChatListAdapter.ChatViewHolder>() {
 
     var chatList: List<ChatInfo> = emptyList()
         set(value) {
@@ -29,12 +31,12 @@ class UserChatListAdapter : RecyclerView.Adapter<UserChatListAdapter.ChatViewHol
     override fun getItemCount(): Int = chatList.size
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        holder.bind(chatList[position])
+        holder.bind(chatList[position], click)
     }
 
     class ChatViewHolder(private val binding: ItemChatBinding) : ViewHolder(binding.root) {
 
-        fun bind(chatInfo: ChatInfo) {
+        fun bind(chatInfo: ChatInfo, click: (ChatInfo) -> Unit) {
             binding.chatIcon.text = getIconText(chatInfo.chatName)
 
             binding.nameChatItem.text = chatInfo.chatName
@@ -44,7 +46,7 @@ class UserChatListAdapter : RecyclerView.Adapter<UserChatListAdapter.ChatViewHol
             } ?: ""
 
             binding.root.setOnClickListener {
-
+                click(chatInfo)
             }
         }
 

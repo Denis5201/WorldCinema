@@ -70,6 +70,19 @@ class FilmFragment : Fragment() {
             binding.imagesFilmRV.visibility = View.GONE
         }
 
+        if (viewModel.movie.chatInfo != null) {
+            binding.chatFIlm.setOnClickListener {
+                val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
+
+                val directions = FilmFragmentDirections.actionFilmFragmentToMovieChatFragment(
+                    viewModel.movie.chatInfo!!.chatId, viewModel.movie.chatInfo!!.name
+                )
+                mainNavHost.navController.navigate(directions)
+
+                viewModel.setDefaultStatus()
+            }
+        }
+
         viewModel.episodes.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 val episodeAdapter = FilmEpisodeAdapter { episodeId ->
