@@ -41,4 +41,8 @@ abstract class RepositoryModule {
     abstract fun bindCollectionRepository(
         collectionRepositoryImpl: CollectionRepositoryImpl
     ): CollectionRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindChatRepository(chatRepositoryImpl: ChatRepositoryImpl): ChatRepository
 }

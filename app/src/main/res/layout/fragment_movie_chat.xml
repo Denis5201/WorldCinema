@@ -8,12 +8,73 @@
     tools:context=".presentation.chats.MovieChatFragment">
 
     <TextView
+        android:id="@+id/nameChat"
+        style="@style/h3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backMovieChat"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/hello_blank_fragment" />
+
+    <ImageView
+        android:id="@+id/backMovieChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/arrow_back"
+        android:contentDescription="@string/content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/nameChat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nameChat" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatFieldRV"
+        android:layout_width="0dp"
+        android:layout_height="600dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/inputMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nameChat"
+        tools:listitem="@layout/item_left_message" />
+
+    <ImageView
+        android:id="@+id/sendMessage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/compilation_c_button"
+        android:scaleType="center"
+        android:contentDescription="@string/content_description"
+        android:src="@drawable/arrow_send"
+        app:layout_constraintBottom_toBottomOf="@+id/inputMessage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/inputMessage"
+        style="@style/editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/write_message"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:singleLine="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendMessage"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

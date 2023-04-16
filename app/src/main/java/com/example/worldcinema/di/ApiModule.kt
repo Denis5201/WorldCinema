@@ -39,6 +39,10 @@ object ApiModule {
     @Singleton
     fun provideCollectionApi(retrofit: Retrofit): CollectionApi = retrofit.create(CollectionApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideChatApi(retrofit: Retrofit): ChatApi = retrofit.create(ChatApi::class.java)
+
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton

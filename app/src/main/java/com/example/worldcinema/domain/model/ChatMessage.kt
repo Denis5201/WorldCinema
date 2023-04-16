@@ -1,9 +1,6 @@
-package com.example.worldcinema.data.dto
+package com.example.worldcinema.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class ChatMessageDto(
+data class ChatMessage(
     val messageId: String,
     val creationDateTime: String,
     val authorId: String,

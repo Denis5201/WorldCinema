@@ -51,4 +51,5 @@
     <string name="warning">Предупреждение</string>
     <string name="delete_film">Удалить фильм из коллекции?</string>
     <string name="cancel">Отмена</string>
+    <string name="write_message">Напишите сообщение…</string>
 </resources>
