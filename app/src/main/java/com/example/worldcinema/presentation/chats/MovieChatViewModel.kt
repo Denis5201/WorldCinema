@@ -6,7 +6,6 @@ import com.example.worldcinema.domain.model.ChatMessage
 import com.example.worldcinema.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,6 +14,7 @@ class MovieChatViewModel @Inject constructor(
     private val setChatConnectionUseCase: SetChatConnectionUseCase,
     private val sendChatMessageUseCase: SendChatMessageUseCase,
     private val disconnectChatUseCase: DisconnectChatUseCase,
+    private val messageSource: MessageSource,
     getUserIdUseCase: GetUserIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -24,6 +24,9 @@ class MovieChatViewModel @Inject constructor(
 
     private val _statusConnection = MutableLiveData(false)
     val statusConnection: LiveData<Boolean> = _statusConnection
+
+    private val _cleanInput = MutableLiveData(false)
+    val cleanInput: LiveData<Boolean> = _cleanInput
 
     var message: LiveData<ChatMessage>? = null
         private set
@@ -48,13 +51,16 @@ class MovieChatViewModel @Inject constructor(
 
     fun sendMessage(text: String) {
         if (text.isEmpty()) {
+            _uiState.value = _uiState.value!!.copy(
+                isShowMessage = true,
+                message = messageSource.getMessage(MessageSource.SEND_EMPTY_MESSAGE)
+            )
             return
         }
-        val now = LocalDateTime.now()
         viewModelScope.launch {
             sendChatMessageUseCase(text).collect { result ->
                 result.onSuccess {
-
+                    _cleanInput.value = true
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
                         isShowMessage = true,
@@ -73,6 +79,7 @@ class MovieChatViewModel @Inject constructor(
     }
 
     fun setDefaultStatus() {
+        _cleanInput.value = false
         _uiState.value = _uiState.value!!.copy(
             isShowMessage = false
         )

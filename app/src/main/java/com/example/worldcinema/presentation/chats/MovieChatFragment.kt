@@ -68,6 +68,13 @@ class MovieChatFragment : Fragment() {
                 binding.progressBarMovieChat.visibility = View.GONE
             }
         }
+
+        viewModel.cleanInput.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.inputMessage.text.clear()
+                viewModel.setDefaultStatus()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -81,8 +88,14 @@ class MovieChatFragment : Fragment() {
             adapter.addComponent(ChatComponent.DateLabel(chatMessage.creationDateTime.toLocalDate()))
         } else {
             when(val lastMessage = adapter.componentList.last()) {
-                is ChatComponent.UsersMessage -> maybeAddDateLabel(lastMessage.chatMessage, chatMessage, adapter)
-                is ChatComponent.MyMessage -> maybeAddDateLabel(lastMessage.chatMessage, chatMessage, adapter)
+                is ChatComponent.UsersMessage -> {
+                    maybeAddDateLabel(lastMessage.chatMessage, chatMessage, adapter)
+                    maybeDecreasePadding(lastMessage.chatMessage, chatMessage, adapter)
+                }
+                is ChatComponent.MyMessage -> {
+                    maybeAddDateLabel(lastMessage.chatMessage, chatMessage, adapter)
+                    maybeDecreasePadding(lastMessage.chatMessage, chatMessage, adapter)
+                }
                 else -> {}
             }
         }
@@ -99,5 +112,10 @@ class MovieChatFragment : Fragment() {
             return
         }
         adapter.addComponent(ChatComponent.DateLabel(new.creationDateTime.toLocalDate()))
+    }
+    private fun maybeDecreasePadding(last: ChatMessage, new: ChatMessage, adapter: MovieChatAdapter) {
+        if (last.authorId == new.authorId) {
+            adapter.decreasePadding()
+        }
     }
 }

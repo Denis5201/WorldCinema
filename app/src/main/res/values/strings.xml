@@ -65,4 +65,5 @@
     <string name="november">Ноября</string>
     <string name="december">Декабря</string>
     <string name="today">Сегодня</string>
+    <string name="send_empty_message">Нельзя отправить пустое сообщение</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.example.worldcinema.presentation.chats
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
@@ -9,6 +11,7 @@ import com.example.worldcinema.R
 import com.example.worldcinema.databinding.ItemDateBinding
 import com.example.worldcinema.databinding.ItemLeftMessageBinding
 import com.example.worldcinema.databinding.ItemRightMessageBinding
+import com.example.worldcinema.domain.model.ChatMessage
 import java.time.LocalDate
 
 class MovieChatAdapter : RecyclerView.Adapter<ViewHolder>() {
@@ -51,10 +54,22 @@ class MovieChatAdapter : RecyclerView.Adapter<ViewHolder>() {
 
             binding.textRight.text = message.text
 
-            val time = message.creationDateTime.toLocalTime()
-            val minute = if (time.minute < 10) "0${time.minute}" else "${time.minute}"
-            val nameAndTime = "${message.authorName} • ${time.hour}:${minute}"
-            binding.nameTimeRight.text = nameAndTime
+            binding.nameTimeRight.text = getNameAndTimeString(message)
+
+            val destiny = this.itemView.context.resources.displayMetrics.density
+            val params = binding.messageLayoutRight.layoutParams as MarginLayoutParams
+            if (myMessage.smallPadding) {
+                binding.avatarRight.visibility = View.INVISIBLE
+
+                params.bottomMargin = (SMALL_PADDING * destiny + 0.5f).toInt()
+                binding.messageLayoutRight.layoutParams = params
+                return
+            } else {
+                binding.avatarRight.visibility = View.VISIBLE
+
+                params.bottomMargin = (BIG_PADDING * destiny + 0.5f).toInt()
+                binding.messageLayoutRight.layoutParams = params
+            }
 
             if (message.authorAvatar.isNullOrEmpty()) {
                 binding.avatarRight.setImageResource(R.drawable.avatar_default)
@@ -83,10 +98,22 @@ class MovieChatAdapter : RecyclerView.Adapter<ViewHolder>() {
 
             binding.textLeft.text = message.text
 
-            val time = message.creationDateTime.toLocalTime()
-            val minute = if (time.minute < 10) "0${time.minute}" else "${time.minute}"
-            val nameAndTime = "${message.authorName} • ${time.hour}:${minute}"
-            binding.nameTimeLeft.text = nameAndTime
+            binding.nameTimeLeft.text = getNameAndTimeString(message)
+
+            val destiny = this.itemView.context.resources.displayMetrics.density
+            val params = binding.messageLayoutLeft.layoutParams as MarginLayoutParams
+            if (usersMessage.smallPadding) {
+                binding.avatarLeft.visibility = View.INVISIBLE
+
+                params.bottomMargin = (SMALL_PADDING * destiny + 0.5f).toInt()
+                binding.messageLayoutLeft.layoutParams = params
+                return
+            } else {
+                binding.avatarLeft.visibility = View.VISIBLE
+
+                params.bottomMargin = (BIG_PADDING * destiny + 0.5f).toInt()
+                binding.messageLayoutLeft.layoutParams = params
+            }
 
             if (message.authorAvatar.isNullOrEmpty()) {
                 binding.avatarLeft.setImageResource(R.drawable.avatar_default)
@@ -153,9 +180,22 @@ class MovieChatAdapter : RecyclerView.Adapter<ViewHolder>() {
         notifyItemInserted(componentList.size - 1)
     }
 
-    companion object {
+    fun decreasePadding() {
+        componentList.last().smallPadding = true
+        notifyItemChanged(componentList.size - 1)
+    }
+
+    private companion object {
         const val MY_MESSAGE = 0
         const val USERS_MESSAGE = 1
         const val DATE = 2
+        const val SMALL_PADDING = 4
+        const val BIG_PADDING = 16
+
+        fun getNameAndTimeString(chatMessage: ChatMessage): String {
+            val time = chatMessage.creationDateTime.toLocalTime()
+            val minute = if (time.minute < 10) "0${time.minute}" else "${time.minute}"
+            return "${chatMessage.authorName} • ${time.hour}:${minute}"
+        }
     }
 }

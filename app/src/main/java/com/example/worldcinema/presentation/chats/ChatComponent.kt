@@ -3,7 +3,7 @@ package com.example.worldcinema.presentation.chats
 import com.example.worldcinema.domain.model.ChatMessage
 import java.time.LocalDate
 
-sealed class ChatComponent {
+sealed class ChatComponent(var smallPadding: Boolean = false) {
     data class MyMessage(val chatMessage: ChatMessage) : ChatComponent()
 
     data class UsersMessage(val chatMessage: ChatMessage) : ChatComponent()

@@ -37,6 +37,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compilationEmptyImage" />
 
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/cardStack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingStart="24dp"
+        android:paddingTop="70dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="120dp"
+        app:layout_constraintBottom_toTopOf="@id/movieButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/currentMovieName"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/crossButton"
         android:layout_width="wrap_content"
@@ -108,20 +122,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/confirm_password" />
-
-    <com.yuyakaido.android.cardstackview.CardStackView
-        android:id="@+id/cardStack"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingStart="24dp"
-        android:paddingTop="70dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="120dp"
-        app:layout_constraintBottom_toTopOf="@id/movieButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/currentMovieName"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBarCompilation"

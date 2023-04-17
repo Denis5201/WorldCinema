@@ -19,6 +19,7 @@ class MessageSource @Inject constructor(
             COLLECTION_NAME_EMPTY -> resources.getString(R.string.collection_name_empty)
             CUSTOM_FAVOUR_COLLECTION -> resources.getString(R.string.custom_favour_collection)
             FAVOUR_COLLECTION_NOT_FOUND -> resources.getString(R.string.favour_collection_not_found)
+            SEND_EMPTY_MESSAGE -> resources.getString(R.string.send_empty_message)
             else -> ERROR
         }
     }
@@ -31,5 +32,6 @@ class MessageSource @Inject constructor(
         const val COLLECTION_NAME_EMPTY = 3
         const val CUSTOM_FAVOUR_COLLECTION = 4
         const val FAVOUR_COLLECTION_NOT_FOUND = 5
+        const val SEND_EMPTY_MESSAGE = 6
     }
 }

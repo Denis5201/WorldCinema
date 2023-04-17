@@ -52,7 +52,7 @@ class UserChatListAdapter(
 
         private fun getIconText(chatName: String): String {
             return chatName.split(' ', ignoreCase = false, limit = 2)
-                .joinToString {
+                .joinToString(separator = "") {
                     it[0].uppercase()
                 }
         }
