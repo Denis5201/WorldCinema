@@ -38,6 +38,8 @@ class MainFragment : Fragment() {
             viewModel.goWatchEpisode()
         }
 
+        viewModel.getLastView()
+
         viewModel.uiState.observe(viewLifecycleOwner) {
             if (it.goWatchEpisode) {
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost

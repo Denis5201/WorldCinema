@@ -43,10 +43,8 @@ class MainViewModel @Inject constructor(
     val forMeList: LiveData<List<Movie>> = _forMeList
 
     init {
-        _uiState.value = MainUiState()
         getCover()
         getTrendMovies()
-        getLastView()
         getNewMovies()
         getForMeMovies()
     }
@@ -106,11 +104,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun getLastView() {
+    fun getLastView() {
         viewModelScope.launch {
             getLastViewMovieUseCase().collect { result ->
                 result.onSuccess {
-                    _lastViewEpisode.value = if (it.isEmpty()) null else it.last()
+                    _lastViewEpisode.value = if (it.isEmpty()) null else it.first()
                 }.onFailure {
                     _uiState.value = _uiState.value!!.copy(
                         isShowMessage = true,

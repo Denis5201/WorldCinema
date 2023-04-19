@@ -71,6 +71,7 @@ class FilmFragment : Fragment() {
         }
 
         if (viewModel.movie.chatInfo != null) {
+            binding.chatFIlm.visibility = View.VISIBLE
             binding.chatFIlm.setOnClickListener {
                 val mainNavHost = requireActivity().supportFragmentManager.findFragmentById(R.id.bigFragment) as NavHost
 

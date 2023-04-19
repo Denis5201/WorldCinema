@@ -62,10 +62,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/discussion"
             android:contentDescription="@string/content_description"
+            android:src="@drawable/discussion"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/posterFilm" />
+            app:layout_constraintTop_toBottomOf="@+id/posterFilm"
+            tools:visibility="visible" />
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/tagsLayout"
