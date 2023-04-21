@@ -65,7 +65,7 @@ class EditCollectionFragment : Fragment() {
                 return@observe
             }
             val context = requireContext()
-            val iconId = context.resources.getIdentifier(it, "drawable", context.packageName)
+            val iconId = context.resources.getIdentifier(it, Constants.DRAWABLE, context.packageName)
             binding.imageEditCollection.setImageResource(iconId)
         }
 

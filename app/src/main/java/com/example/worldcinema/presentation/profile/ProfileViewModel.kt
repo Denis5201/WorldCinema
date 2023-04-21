@@ -28,10 +28,6 @@ class ProfileViewModel @Inject constructor(
     private val _profile = MutableLiveData<UserAccount>()
     val profile: LiveData<UserAccount> = _profile
 
-    init {
-        getAccount()
-    }
-
     fun logout() {
         clearUserDataUseCase()
     }
@@ -43,7 +39,7 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    private fun getAccount() {
+    fun getAccount() {
         viewModelScope.launch {
             getUserAccountUseCase().collect { result ->
                 result.onSuccess {

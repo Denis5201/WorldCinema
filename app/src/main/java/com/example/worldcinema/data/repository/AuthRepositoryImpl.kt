@@ -25,6 +25,8 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun register(registrationForm: RegistrationForm): Flow<Result<Unit>> = flow {
         try {
+            sharedPreferencesRepository.clearUserInfo()
+
             val tokens = authApi.register(RegistrationBodyDto.fromRegistrationForm(registrationForm))
 
             sharedPreferencesRepository.setTokens(tokens.accessToken, tokens.refreshToken)
@@ -41,9 +43,13 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun signIn(credentials: Credentials): Flow<Result<Unit>> = flow {
         try {
+            sharedPreferencesRepository.clearUserInfo()
+
             val tokens = authApi.login(CredentialsDto.fromCredentials(credentials))
+
             sharedPreferencesRepository.setTokens(tokens.accessToken, tokens.refreshToken)
             sharedPreferencesRepository.setFirstRunFalse()
+
             emit(Result.success(Unit))
         } catch (e: Exception) {
             Log.e("OPS signIn", e.message.toString())

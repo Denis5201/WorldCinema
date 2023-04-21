@@ -62,6 +62,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getAccount()
+
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().popBackStack()
         }

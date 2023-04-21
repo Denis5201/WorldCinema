@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.worldcinema.MessageSource
 import com.example.worldcinema.domain.model.RegistrationForm
 import com.example.worldcinema.domain.usecase.IsEmailFormatUseCase
+import com.example.worldcinema.domain.usecase.IsStringsEmptyUseCase
 import com.example.worldcinema.domain.usecase.RegisterUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
     private val isEmailFormatUseCase: IsEmailFormatUseCase,
+    private val isStringsEmptyUseCase: IsStringsEmptyUseCase,
     private val messageSource: MessageSource
 ) : ViewModel() {
 
@@ -86,9 +88,10 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun isInputEmpty(registrationInfo: RegistrationInfo): Boolean {
-        return registrationInfo.name.isEmpty() || registrationInfo.surname.isEmpty()
-                || registrationInfo.email.isEmpty() || registrationInfo.password.isEmpty()
-                || registrationInfo.confirmPassword.isEmpty()
+        return isStringsEmptyUseCase(
+            registrationInfo.name, registrationInfo.surname, registrationInfo.email,
+            registrationInfo.password, registrationInfo.confirmPassword
+        )
     }
 
     private fun setErrorMessage(reason: Int) {

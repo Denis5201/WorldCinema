@@ -72,7 +72,6 @@ class MainFragment : Fragment() {
                 .load(it)
                 .into(binding.cover)
             binding.cover.visibility = View.VISIBLE
-            binding.gradient.visibility = View.VISIBLE
             binding.coverButton.visibility = View.VISIBLE
         }
         viewModel.trendList.observe(viewLifecycleOwner) {

@@ -15,6 +15,11 @@ class Authenticator @Inject constructor(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
+
+        if (response.responseCount > 1) {
+            return null
+        }
+
         val refreshToken = sharedPref.getString(SharedPref.REFRESH_TOKEN)
 
         val newTokensResult = runBlocking {
@@ -33,8 +38,13 @@ class Authenticator @Inject constructor(
             sharedPref.setString(SharedPref.REFRESH_TOKEN, it.refreshToken)
         }
 
-        return if (newTokensResult?.isSuccess == false || response.responseCount > 1) {
-            null
+        return if (newTokensResult?.isFailure == true) {
+            response.request.newBuilder()
+                .header(
+                    Constants.AUTHORIZATION_HEADER,
+                    "Bearer ${sharedPref.getString(SharedPref.ACCESS_TOKEN)}"
+                )
+                .build()
         } else {
             response.request.newBuilder()
                 .header(

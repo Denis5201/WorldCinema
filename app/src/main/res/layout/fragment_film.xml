@@ -17,21 +17,12 @@
             android:layout_width="0dp"
             android:layout_height="400dp"
             android:contentDescription="@string/content_description"
+            android:foreground="@drawable/gradient"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
-
-        <ImageView
-            android:id="@+id/gradientFilm"
-            android:layout_width="0dp"
-            android:layout_height="400dp"
-            android:background="@drawable/gradient"
-            android:contentDescription="@string/content_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/posterFilm" />
 
         <Button
             android:id="@+id/watchEpisode"

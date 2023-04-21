@@ -40,8 +40,12 @@ class ChoosingCollectionIconFragment : Fragment() {
 
         for (i in 1..36) {
             val newIconBinding =  ItemIconBinding.inflate(layoutInflater)
-            val iconId = context.resources.getIdentifier("$ICON_PREFIX$i", "drawable", context.packageName)
+
+            val iconId = context.resources.getIdentifier(
+                "$ICON_PREFIX$i", Constants.DRAWABLE, context.packageName
+            )
             newIconBinding.itemIcon.setImageResource(iconId)
+
             newIconBinding.itemIcon.setOnClickListener {
                 setFragmentResult(
                     Constants.ICON_COLLECTION_REQUEST,

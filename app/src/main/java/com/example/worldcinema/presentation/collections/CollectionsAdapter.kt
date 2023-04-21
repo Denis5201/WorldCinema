@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.worldcinema.Constants
 import com.example.worldcinema.R
 import com.example.worldcinema.databinding.ItemCollectionBinding
 import com.example.worldcinema.domain.model.CollectionInfo
@@ -38,7 +39,9 @@ class CollectionsAdapter(
                 binding.imageCollectionItem.setImageResource(R.drawable.collection_icon_1)
             } else {
                 val context = this.itemView.context
-                val iconId = context.resources.getIdentifier(collection.image, "drawable", context.packageName)
+                val iconId = context.resources.getIdentifier(
+                    collection.image, Constants.DRAWABLE, context.packageName
+                )
                 binding.imageCollectionItem.setImageResource(iconId)
             }
 

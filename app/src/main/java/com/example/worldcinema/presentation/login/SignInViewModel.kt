@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.worldcinema.MessageSource
 import com.example.worldcinema.domain.model.Credentials
-import com.example.worldcinema.domain.usecase.IsEmailFormatUseCase
-import com.example.worldcinema.domain.usecase.IsFirstRunAppUseCase
-import com.example.worldcinema.domain.usecase.IsTokenValidYetUseCase
-import com.example.worldcinema.domain.usecase.SignInUseCase
+import com.example.worldcinema.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +15,7 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val isTokenValidYetUseCase: IsTokenValidYetUseCase,
+    private val isStringsEmptyUseCase: IsStringsEmptyUseCase,
     private val isEmailFormatUseCase: IsEmailFormatUseCase,
     private val messageSource: MessageSource,
     isFirstRunAppUseCase: IsFirstRunAppUseCase
@@ -35,7 +33,7 @@ class SignInViewModel @Inject constructor(
     }
 
     fun signIn(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
+        if (isStringsEmptyUseCase(email, password)) {
             setErrorMessage(MessageSource.EMPTY_INPUT)
             return
         }
